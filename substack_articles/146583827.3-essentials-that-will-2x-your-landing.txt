@@ -1,0 +1,186 @@
+In 2024, even your grandparents are likely to know what a website is, but many people still cannot clearly define a landing page. The best definition I have seen comes from 
+SEMRush
+: 
+“A landing page is a webpage designed to persuade users to take a specific action. For example, signing up for a newsletter, purchasing a product, or registering for an event.”
+The key phrase here is, ‘specific action.’ While a website may be praised for its elegant design or its informativeness, a landing page is primarily judged by its conversion rate, which can be calculated as ‘# of desired actions / # of visitors’. 
+A landing page may be visual train wreck that makes the most tasteless piece of modern art look like the Mona Lisa,  but if it gets users to take the desired action, it has achieved its objective. For this reason, marketers will frequently spin up multiple landing pages, all of which exist separate from the brand’s main website and each of which is designed to drive a user to take a different action.
+Lest you think your landing page design is unsophisticated, this sold for $46 million
+In answering the question, ‘what makes a good landing page?’ I have found that many lose the forest for the trees:
+“A good landing page should have an explainer video! I’ve heard video converts really well.”
+“Chatbots. Chatbots are key and if you don’t have one, your landing page is lacking!”
+“A landing page needs a strong hero image and headline. If you don’t get their attention right away, you lose them!”
+While all of these are potentially good tactics, it is imperative that they fit into a larger strategy. Otherwise, you will end up running around like a chicken with its head cut off, routinely flip-flopping and adding a ton of extraneous fluff to your page. 
+From my experience, a good landing page needs to do 3 things effectively:
+#1 - It needs to clearly communicate what you are offering.
+#2 - It needs to establish trust and credibility.
+#3 - It needs to make it as easy for the visitor to take the desired action.
+That is it. While we can debate tactics until the cows come home, I can guarantee that if your landing page fails to effectively address the three points above, it will fail. If the visitor is unclear what you are offering, it is highly unlikely that they will give you their personal information or be willing to purchase. If you have made it crystal clear what you are offering, but it is unclear what makes you superior to the competition, people will pass. Finally, if the user experience is subpar and leads to frustration or irritation, people will bounce before they take the desired action. In this article, I will be covering the three essentials described above, the sub-components that comprise each, and some examples of brands that succeed and fail in each area.
+#1 - Clearly Communicate What You Are Offering
+Clearly communicating your offering is point number one for a reason: if your visitors are unable to figure it out within the first few seconds, they won’t stick around. For that reason, it is essential that you make it as clear as possible and ensure it is 
+Above the Fold
+.  There are three primary ways to accomplish this:
+1). 
+Headline
+2). 
+Sub-Headline
+3). 
+Hero Image or Video
+The Headline is the first thing a user sees when they hit your page and thus plays a crucial part in shaping their first impression. The Sub-Headline appears below the Headline and provides additional context or information. The Hero Image or Video is a large (usually eye-catching) piece of content displayed at the top of your page. 
+Using examples from 2023’s 
+Inc. 5000 list
+ (the fastest growing companies in America), I want to share two good examples and two bad examples. A quick point before diving in: “How do you know these are landing pages and not just their main websites?” someone might ask, to which I would reply, “I arrived at these pages by clicking on ads from Google, and ads are always designed to persuade users to take a specific action, making these de facto landing pages.”
+Good (
+Compose.ly
+ and 
+Cure Hydration
+)
+Compose.ly’s Headline is about as direct and clear as one can get: 
+Expert Content Writing Services That Drive Results
+. Their Sub-Headline (the paragraph below it) is a bit long and could really benefit from removing the second sentence, but with the Headline doing most of the heavy lifting, it is not a huge deal. The Hero Image of the woman holding the computer is clean and on-brand.
+With Cure Hydration, their Headline (“
+Turn your water into WOW!”) 
+and Sub-Headline (
+“Electrolytes that taste as good as they make you feel.”
+) are both very clear and to the point. The Hero Image of the Cure packets looks breezy and refreshing.
+Bad (
+Space Theory
+ and 
+Qualsights
+)
+My first thoughts on Space Theory’s Headline are…wait…what…where is it?! You might say the Headline is “
+Kitchens” 
+with the sub-Headline “
+From the Creators of Henrybuilt”
+, but as someone who has just been exposed to this brand, I have absolutely no clue what this means. I feel like I stumbled into an avant-garde Parisian art gallery where a man with an elaborate scarf and beret is spitting riddles at me. The Hero Image also does not provide much additional clarity. Does this company advise on kitchen design? Do they sell kitchen essentials? Do they handle kitchen reconstruction? I haven’t a clue.
+One of the most common mistakes brands make with landing pages is attempting to be mysterious. From reading Qualsight’s Headline (
+“Decode Human Behavior”
+), I have no idea what this offering is and whether this company is trying to cater directly to consumers or businesses. The Sub-Headline (
+“Introducing the Biggest Breakthrough in Research Technology”
+) does not provide much additional clarity. One thing I will admit - at least it is attention grabbing. However, scrolling down, the next section is equally cryptic:
+While they now attempt to state what it is they are offering (“
+World’s Leading Consumer Insights Technology”
+), I still find this pretty hard to grasp. The biggest issues are:
+#1 - I don’t really know who their target audience is
+#2 - They are emphasizing features over benefits
+As a marketer, #2 is a rookie mistake that is one of the first lessons in Marketing 101. Instead of leading with, “Patented Smart Sensors” they could say something like: 
+Improve customer retention by over 50%
+Our patented smart sensors get you better customer
+insights, so you keep them happy and keep getting paid
+Every business wants to improve customer retention. Very few people get excited about smart sensors.
+One final thing to address: does it make sense to use an explainer video in order to communicate what your offering is? I have tested this with a number of my clients, and despite claims that video can 
+increase total conversions by 86%
+, I have found video to be hit or miss. A video that is done well and is the appropriate length usually makes a positive difference, but a poorly done video that is too long can be a net negative. 
+In line with 
+this article
+, I have found from experience that 30 - 60 seconds is the ideal length for an explainer video, with 45 seconds as a sweet spot. Given that 1/5 of visitors bounce within the 
+first 10 seconds
+ after landing on a page, and visitors have 
+short attention spans
+, I would also make sure your video gets to the point within the first 5 seconds (or 10 seconds max).
+#2 - Establish Trust and Credibility 
+Establishing trust and credibility is fairly straightforward. There are a few well-worn tactics to accomplish this, including:
+1). 
+Strong Brand Image
+ (e.g. well-known customer logos, brand names, press releases, etc.).
+2). 
+Social Proof
+ (e.g. strong customer reviews, testimonials, NPS scores, # of customers served, etc.).
+3). 
+Authority
+ (e.g. well-known investors, credentialed advisors, industry certifications, # of years in business etc.).
+4). 
+Scarcity
+ (e.g. waitlists, restricted cohorts, limited time offers, etc.).
+We will cover each of these in some detail, along with companies that do each well and whom you can learn from:
+Strong Brand Image
+When it comes to Brand Image, your intention should be to communicate that, ‘I am well known and well respected in my industry.’ In order for this to be effective, the brands or logos you promote on your website must be easily recognizable and well regarded amongst your target audience. If your audience has not heard of them, they won’t pack much of a punch and will be overlooked. 
+One company that does this really well is 
+ArtsAI
+, which offers marketers, advertising agencies and media owners realtime attribution for their online and offline advertising. 
+They list well-known parters such as Google, Facebook, CBS, and Pandora that most people are likely to be familiar with.
+They also highlight their success with popular brands such as Pandora, Wish, and Lyft. 
+One other common tactic is to highlight well-known media or press releases that you have done. For example, 
+Publishing.com
+ does a great job of this:
+Social Proof
+Social proof is a classic psychological principle, wherein people copy the actions of others in choosing how to behave in a given situation. Smart brands leverage this to their advantage, and make every effort to show that they are loved by the public. 
+One company that does this well is 
+Novo
+, a fintech platform for small businesses. They do a great job of both highlighting positive individual customer testimonials, as well as emphasizing their strong overall review scores with customers.
+Solid customer testimonials
+Impressive reviews and stats
+Authority
+Authority is another well-known tactic in psychology, and refers to the fact that people tend to support persons that they perceive as powerful or in charge. 
+I have found that companies in the medical space tend to be some of the best at leveraging authority, since it is a field that the public tends to be fairly skeptical and cautious about. One company that makes good use of authority is 
+Thesis
+, which offers custom-tailored nutrient compounds formulated to enhance mental performance. 
+They provide an in-depth description of the clinical review process they went through and how thoroughly their product has been vetted.
+They also literally say, ‘Trusted By Experts’, and mention a world class performance coach and popular pro athlete.
+Scarcity
+This tactic is less common than the rest as a way to establish credibility, but it is effective nonetheless. Someone who does this well is the coach 
+Lucy Jeon
+, who can help you to get a job abroad with visa sponsorship or a fully remote job.
+By creating cohorts with limited spots as well as a waitlist, she is communicating, “I am in very high demand - you should consider yourself lucky if I work with you.” 
+#3 - Make it Easy for Users to Take the Desired Action
+Out of the three best practices shared in this article, I find that #3 is the one that is most frequently mishandled. There are a few keys that I have found here that will steer you on the right course:
+1). Have only one call to action. 
+2). Minimize the clicks required to take your desired action.
+3). Ensure your page loads quickly.
+4). If you have a form, make sure it is multi-step.
+5). Be cautious about pop-ups, chat-bots, and other distractions. 
+I will spend some time diving into each of these and sharing my thoughts.
+Have Only One Call to Action (CTA)
+It is a common occurrence for companies to try to please everybody and be all things to all people. Nowhere is this more true than for CTAs, where companies will simultaneously try to convince you to purchase a product, download a guide, and fill out a form. This lack of focus can easily produce 
+analysis paralysis
+ in your visitors, resulting in them taking zero action. 
+One site that tries to do too much is 
+Get Staffed Up
+, a staffing company that places virtual assistants from Latin America with law firms in the United States (screenshots below).
+They have a ‘Get Started’ button that takes you to a ‘Contact Us’ page, a quiz to learn more, a ‘Connect Now’ button that takes you to the founder’s LinkedIn page, a mini form at the bottom to sign up for email updates, as well as a phone number and email you can use to contact them directly. Not only is this surplus of options likely to cause visitors to get overwhelmed, it is also a disaster to track from a web analytics perspective, making it much harder to evaluate the effectiveness of your growth strategy.
+Minimize the Clicks Required to Take Your Desired Action
+I feel like I could write an entire blog article on just this single point. For a landing page to be as effective as possible, you want it to provide a sufficient amount of information to pique a visitor’s interest and take your desired action, but not so much that their visit becomes a research project. In isolation, metrics such as ‘Pages Per Session’ or ‘Time on Site’ can be highly misleading and often counterproductive. It’s not so different from how on a dating app, you would measure the app’s usefulness by the number and quality of dates set up; not by ‘minutes spent messaging back and forth.’ There are a few keys here that I would emphasize:
+1). 
+Do not link back to your main website
+ - A well designed landing page should provide a sufficient amount of information by itself. If a visitor needs to visit your main website to get more information, the page is not doing its job.
+2). 
+Make it a single page (or max 2 pages)
+ - There is a reason it is called a ‘landing page’ and not ‘landing site’. If users need to take a lot of steps to take the desired action, you are going to see fall off at each step and a much lower completion rate.
+3). 
+Do not have a navigation bar at the top 
+- This is a mistake a lot of companies make, but if you follow the advice in point 2 above, it should be clear why ditching the navigation bar is suggested. A 
+2018 study
+ by the landing page builder Unbounce found that pages with one link had an average conversion rate of 13.50%, while those with five or more links had average conversion rates of 10.50%. 
+4). 
+Have a floating CTA button 
+- More and more web visits are mobile first. A 
+2023 study
+ found that mobile devices account for approximately 57% of people’s online time and 53% of the world’s web traffic. A floating CTA button (e.g. a ‘Contact Us’ button that users can always click as they scroll down the page) makes it as easy as possible to take the desired action at any time.
+One further point to hammer home the value of reducing steps to purchase: studies have shown that simply by incorporating their patented One Click Checkout, Amazon has been able to 
+increase conversion rates 30%
+ when compared to a traditional multi-step checkout processes.
+Ensure your page loads quickly
+Research 
+by Google
+ found that the probability of a visitor bouncing on a page increases by 32% as page load time goes from 1 second to 3 seconds. I like to use the free tool, 
+Page Speed Insights
+, to tell me how quickly my pages are loading as well as what are the easy steps to increase page speed further.
+If you have a form, make sure it is multi-step
+Years ago, I read some data that stated that breaking a web-form into multiple steps drastically increases completion rate. I was highly skeptical, but after testing this change myself for a few clients, I found over and over that it made a world of difference (usually, an increase in conversion rate ranging from 20% - 50%). 
+While a long single step form can feel daunting and intimidating, breaking the form into multiple steps makes it feel like a lower lift and can even create an element of gamification (i.e. “I am halfway through, I’m not gonna give up now!”). One company that does this really well is 
+BarkBox
+, who has created a simple, elegant, and engaging form experience (below). From my own experience, a progress bar is a nice touch to a multi-step form, and helps to keep users engaged until all steps are completed.
+While there are many ways to create elegant multi-step forms using custom code, two businesses that have done good jobs of making them easy to implement without coding knowledge are 
+Typeform
+ and 
+Formsort.
+Be cautious about pop-ups, chatbots, and other distractions
+ 
+Everyone loves new and shiny things, whether it be AI, virtual reality, or chatbots on a landing page. In line with the other principles described thus far though, the issue with trying to be too fancy with your page is that you risk:
+1). Slowing down page load speed time.
+2). Introducing additional friction or steps to take the desired action.
+3). Adding more CTAs that complicate tracking and cause visitor analysis paralysis.
+In my opinion, a chatbot that serves a useful business purpose (e.g. gets visitors access to faster answers or pushes them towards a purchase) can be potentially useful, but it does need to be thoughtfully implemented. For pop-ups, I think it is okay to have a pop-up in the event of user exit to give them one last chance to take action, but I think time-based pop-ups or random pop-ups are often irritating and hurt the visitor experience.
+Conclusion
+While we covered a lot of ground in this article, the most essential things to take away from it are that a great landing page clearly communicates the offering, establishes trust and credibility, and makes it as easy as possible for the visitor to take the desired action. Given the sheer quantity of steps and tactics described in this article, I have created 
+this cheat sheet
+ to make it as easy as possible for you to implement these changes for yourself. If you find it useful, feel free to duplicate the document and then share it with your wider team. I expect that implementing these best practices will make a big difference for your business, and 2x your landing page conversion rate, if not more.

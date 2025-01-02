@@ -1,0 +1,158 @@
+As I stated in my 
+original article
+ on online reputation management, having a poor online reputation for your business is like trying to make a solid first impression with someone with holes in your shoes, stains on your shirt, and bad breath. You might have a world-class product, but your 2.7-star rating on Trust Pilot, horrific feedback on Reddit, and a mountain of negative articles on Google are enough to scare away over 90% of potential buyers.
+However, there are two hurdles to monitoring your brand’s online reputation effectively. The first is that many tools that do this only offer partial solutions, such as monitoring social media or websites, but rarely both. Second, many of these tools cost hundreds or even thousands of dollars monthly. Thankfully, using a combination of Clay, Chat-GPT, and Zapier, you can create a customized and automated reputation management system to track your and your competitors’ businesses.
+Sample final report
+In this article, I will explain how to do this and provide an example of a custom dashboard and report I built.
+A final note before I jump in: if you see bolded words in this article or the accompanying Google doc, they are dynamic variables in the Clay table. Anyone not interested in reading the full article can find a summary 
+here
+.
+The Key Components of Online Reputation Management 
+There are levels of complexity to online reputation management. Still, for my v1 table and report, I decided to track the following items:
+Social Following
+1). # of LinkedIn Followers
+2). # of Facebook Followers
+3). # of Instagram Followers
+Company Ratings
+4).
+ 
+Glassdoor
+ Rating—Glassdoor is an employee review site that enables you to see how your company is perceived by your workforce.
+5). Google My Business (GMB) Rating - GMB is a customized page you can set up for your business. Users first see it when they Google “
+Company Name Location
+.” An example of a GMB page for Magic Spoon can be found below. I found this page by Googling “Magic Spoon Cereal New York.”
+Company Reviews
+6). Summary of Reviews on Google Search Results - Feedback from top listings on Google search.
+7). % Net Positive Reviews—This tells us the percentage of a product’s favorable online reviews.
+8). Top 3 Product Criticisms from Google Search Result Reviews - Criticisms from top listings on Google search.
+While this is a solid starting list, I intend to create a v2 table and report that includes two additional pieces of information: reviews about a brand on 
+Reddit
+ and 
+YouTube
+. For those unfamiliar with Reddit, it is a wildly popular social media platform that serves as a hub for diverse communities and discussions. 
+74% of Redditors
+ say, “Reddit is where I challenge my thinking and views.” Reddit communities like r/buyitforlife have close to 2 million subscribers. As for YouTube, a 2016 study found that 
+68% of YouTube users
+ watched YouTube to help make a purchase decision.
+Using Clay to Track Social Following  
+Now that we are clear on what we are trying to build, I will show you how to use Clay and Chat-GPT to create a dynamic table and then Zapier to make a report you can share with your wider team. The first item on the list is tracking social following (specifically, the number of Instagram, Facebook, and LinkedIn followers). I used Clay’s built-in AI agent, Claygent, to find all three of these. 
+Here
+ are the prompts I used to smoothly pull in the follower counts from the relevant platforms.
+Using Clay to pull each brand’s # of social media followers
+Using Clay to Track Company Ratings 
+Next, we are going to use Clay to track company ratings (specifically, the company’s Glassdoor rating and GMB rating). I used Claygent to find the company’s Glassdoor rating. 
+Here
+ are the prompts I used to accomplish this.
+Finding the proper rating for a company’s GMB page is trickier for a few reasons. First, not every company has a GMB page; it must be consciously created. Second, many companies have similar names, and despite Clay having a direct GMB integration, if you are not careful, you will either miss the company’s GMB page or accidentally pull in the GMB page for the wrong company.
+Clay’s built-in Google My Business integration
+Here are the steps I took to ensure I pulled in the right GMB page and, thus, the correct GMB rating:
+#1 - Use Clay’s “Domain” integration to find the company URLs for each company.
+#2 - I used Claygent to find each company's headquarters. This is crucial since actually finding a GMB page requires a location search on Google. Try searching “Magic Spoon Cereal,” and no GMB page is returned. Instead, search “Magic Spoon Cereal New York,” and the page will come up. I used Claygent to find the company headquarters, and the prompts that I used to do this can be found 
+here
+.
+#3 - Next, we are going to use Clay’s GMB integration (pictured above) with the following inputs:
+Company Name: 
+Company Name
+Company Website: 
+Domain
+Company Address: 
+Company Headquarters
+#4 - This will return a GMB page, but our work is not done yet. Some of these results are wildly off-base (as the image below shows). Consequently, we need to use Claygent to determine which results are accurate and which are fake. The prompts that I used to do this can be found 
+here
+.
+#5 - It is finally time to separate the wheat from the chaff. We are going to create a “Formula” column using the “AI Formula Generator” with the following command:
+If 
+Profile Legitimacy 
+is equal to “Yes,” then please copy 
+Rating. 
+Otherwise, please write “NA.”
+This final command does the trick, and we now have a foolproof column, “Final GMB Rating.”
+Using Clay to Track Company Reviews
+For the Summary of Reviews on Google Search Results, I first used Clay’s Chat-GPT 4o integration to find the URLs for all product review pages. The prompts I used to do this can be found 
+here
+. This gave me a list of URLs like the following:
+1. https://www.eatingwell.com/article/8071288/magic-spoon-low-carb-high-protein-cereal-review/
+2. https://www.nytimes.com/wirecutter/reviews/magic-spoon-cereal-review/
+3. https://medium.com/@timothy.dpulliam/an-honest-review-of-magic-spoon-cereal-fdbc099ca481
+Next, I used Clay’s Chat-GPT 4o integration to review the text on each webpage and determine whether it is a positive, neutral, or negative review of the product. The prompts I used to do this can be found 
+here
+.
+The “Summary of Reviews on Google Search Results” value is created which we can pull out from the “Review Analysis” prompts that we did above. The summary is Chat-GPTs reasoning as to why it classified the various URLs as Positive, Negative, or Neutral.
+Summary of reviews on Google Search
+Now that we have a count of how many articles are Positive, Negative, or Neutral, I can use Clay’s Formula capabilities to find the % Net Positive Reviews. First, I create a counter and start it at 0. Next, do +1 for all Positive reviews and -1 for all Negative reviews, and then divide the total by the result by the total number of reviews. For example, if four reviews are Positive, 2 Negative, and 2 Neutral, the final result is 25% ( (4 - 2) / 8). Below is an example of what this looks like. All I had to do here was fill out the “Describe the formula you want” section, and Clay did the rest.
+Clay’s Formula builder
+Finally, I want to find the Top 3 Product Criticisms. I used Clay’s Chat-GPT integration and created prompts 
+here
+ to do this. These produced three criticisms for each product based on the reviews I could then pull into its own column.
+Chat-GPT product criticisms
+Creating a Custom Report with Zapier 
+We now have all of the values we want for our company and our closest competitors. As a final step, we will use Zapier to create a custom Google Docs report. The process for doing this has already been well outlined in 
+this article
+, so instead of trying to reinvent the wheel, I will share the field mapping I did in Clay (below) and the end output (
+here
+). The beautiful thing about this is that it’s a one-and-done solution. Now that my table is created, I can input a new company name, run my fields, and within 1 minute or less, I will have a custom report completed for me.
+Conclusion
+In conclusion, creating a comprehensive online reputation management system doesn’t have to be expensive or limited by the constraints of pre-packaged tools. By leveraging the power of Clay, ChatGPT, and Zapier, businesses can automate the monitoring and reporting of their brand’s online presence with precision and cost-efficiency. This customized approach not only provides actionable insights into social following, ratings, and reviews but also lays a strong foundation for enhancing brand credibility and consumer trust.
+If you liked this content, please click the <3 button on Substack so I know which content to double down on.
+TLDR Summary
+This article details how to build a cost-effective and automated online reputation management system using tools like 
+Clay
+, 
+ChatGPT
+, and 
+Zapier
+. It outlines steps to monitor a business's online presence, track competitors, and generate detailed reports without relying on expensive software.
+Key Lessons and Strategies:
+Key Components of Online Reputation Management
+The system tracks the following metrics:
+Social Following
+: Number of followers on LinkedIn, Facebook, and Instagram.
+Company Ratings
+:
+Glassdoor
+: Employee satisfaction and company perception.
+Google My Business (GMB)
+: Customer reviews linked to a company’s local search profile.
+Company Reviews
+:
+Summarized sentiment (positive, negative, neutral) from Google Search results.
+Top three product criticisms based on reviews.
+Net percentage of positive reviews.
+Using Clay to Build the Reputation Tracker
+Tracking Social Following
+:
+Leveraged 
+Claygent
+, Clay’s built-in AI agent, to extract follower counts from LinkedIn, Facebook, and Instagram.
+Tracking Company Ratings
+:
+Used 
+Claygent
+ to pull Glassdoor ratings.
+For GMB ratings:
+Verified GMB pages using company URLs and headquarters data to ensure accurate results.
+Filtered results through an AI formula to remove incorrect profiles and finalize GMB ratings.
+Tracking Company Reviews
+:
+Extracted product review URLs using 
+Clay’s ChatGPT integration
+.
+Summarized the sentiment of reviews (positive, negative, neutral) and calculated the percentage of net positive reviews.
+Identified the top three criticisms from reviews for deeper insights.
+Creating Automated Reports with Zapier
+Automation
+:
+Mapped Clay table fields into Zapier to create custom Google Docs reports.
+Reports are auto-generated within minutes, combining competitor and company data for easy sharing.
+Efficiency
+:
+Once the system is set up, adding a new company name generates a full report in under a minute.
+Key Takeaways:
+Cost-Efficiency
+: Custom solutions with Clay, ChatGPT, and Zapier eliminate the need for expensive reputation management software.
+Automation
+: The integrated system saves time by automating data collection, analysis, and reporting.
+Scalability
+: This method allows businesses to track multiple competitors alongside their own performance with minimal effort.
+Detailed Insights
+: By pulling and analyzing granular data (e.g., review sentiment, top criticisms), businesses gain actionable intelligence to improve their online reputation.
