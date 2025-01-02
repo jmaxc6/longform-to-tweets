@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents Dashboard</title>
+</head>
+<body>
+    <h1>AI Agents Dashboard</h1>
+    <form id="runPipelineForm" method="POST" action="/run">
+        <label for="folderPath">Substack Articles Folder Path:</label><br>
+        <input type="text" id="folderPath" name="folder_path" value="./substack_articles" required><br><br>
+        
+        <label for="outputCsv">Output CSV File Name:</label><br>
+        <input type="text" id="outputCsv" name="output_csv" value="output_tweets.csv" required><br><br>
+        
+        <button type="submit">Run Pipeline</button>
+    </form>
+
+    <h2>Pipeline Status</h2>
+    <div id="status">
+        <p>No tasks running yet.</p>
+    </div>
+</body>
+</html>

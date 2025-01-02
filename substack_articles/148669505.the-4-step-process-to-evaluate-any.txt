@@ -1,0 +1,101 @@
+The TV series “Mad Men” won 16 Emmys and 5 Golden Globes by capitalizing on its audience’s nostalgia. It transported users to a bygone era where life seemed a lot simpler. All it took was a tall, strapping male lead to saunter into a client’s office, blow them away with a captivating pitch constructed entirely from his wits and ingenuity, and translate that into a hypnotic commercial which all but forced the audience to open up their wallets.
+If only it were that easy…
+Regardless of how well “Mad Men” accurately reflected the past, it is unquestionable that marketing pitches and proposals have gotten a lot more complicated since the 60s. “We’ll promise you the #1 ranking on Google!”, “We’ll take over your Instagram Ads and cut your CAC in half!”, “We’ll place your brand on a billboard on Times Square and ensure you are seen by millions!” It seems like nothing is sacred anymore. If anything has an iota of free space that can be plastered with an ad or re-purposed to showcase a brand, it will be. I mean, come on - 
+this company
+ has become one of the fastest growing businesses in America by allowing marketers to run ads on Fortune Cookies…
+When you were seeking wisdom from Confucius but got tweets from Gary V
+Trying to make sense of the myriad options in today’s marketing landscape can quickly become overwhelming. However, if you have the right tools and frameworks with which to assess marketing opportunities, you can begin to tame the chaos and make sound, rational decisions that will help grow your business. In this article, I will be sharing a 4 step process that I use to evaluate any type of marketing proposal, along with 3 specific examples to drill it in. It all starts with step 1.
+Step 1: Map out the user journey 
+Whenever I am presented with a marketing proposal, the first thing I consider is the hypothetical user journey, from first brand exposure to ultimately completing a purchase. What if you do not have clarity on what the exact steps will be? Don’t stress it - the precise number of steps is less important than that you have some specific, concrete steps mapped out. I will give two examples on marketing proposals you might get via email: 
+Proposal #1: You are pitched on running a commercial for your business in the Super Bowl
+#1 - Prospect sees your ad.
+#2 - Prospect calls the phone number that is mentioned at the end of your ad. 
+#3 - Prospect speak to a sales representative over the phone.
+#4 - Prospect purchases your product or service. 
+Proposal #2: You are pitched on search engine optimization (SEO) services for your business
+#1 - Prospect sees your organic listing when searching on Google.
+#2 - Prospect clicks on your organic listing and is directed to your brand’s website.
+#3 - Prospect fills out a form on your brand’s website.
+#4 - A sales representative emails the prospect and they talk. 
+#5 - Prospect purchases your product or service.
+Some sample user journeys (PC: 3 Seeds)
+Step 2: Customize your Performance Model
+I personally developed a tool called the 
+Performance Model
+ in order to put some hard numbers behind the steps we just mapped out. The file I am sharing here is just a template though, and you will need to copy it and then add or remove steps as needed in order to reflect your specific use case. A few other pointers and things to keep in mind:
+-There are two types of cells: orange cells, which you will play around with in the model, and white cells, which are formula-driven and should not be touched. 
+-Basically, if there is a cell that is not a formula and which you have some ability to impact or control, it should be an orange cell. Some examples of orange cells include conversion rates or sales close rates (CVR = conversion rate), goals you set (e.g. 3x ROI or 4x ROAS) or items related to your business metrics (e.g. % Margin or Avg. sales value). 
+-You are going to have a ‘Goal’ column and an ‘Actual’ column, making it easy for you to compare the goals and targets you set with the actual results you are getting in order to see where you might be falling short. For the sake of building your initial model though, you are just going to tweak the ‘Goal’ column and not worry about the ‘Actual’ column. 
+Finally, I am going to share two different model templates: a ‘Basic’ model and an ‘Advanced’ model. The ‘Basic’ model works well enough for most marketers who are used to focusing exclusively on marketing metrics. It is also the model that is most doable for SMB owners who do not have a firm grasp on all of the numbers that underpin their business. The end metric here is Return on Ad Spend (ROAS), which is calculated as (Sales driven by ads / Ad spend). 
+But, assuming you are a business owner or entrepreneur who wants to truly understand how your marketing efforts are impacting your bottom line, the ‘Advanced’ model is going to be a necessity. The reason for this is that on the Revenue side of the equation, the single purchase is not the only thing to consider. Every customer you get is likely going to make additional purchases over their lifetime, and there are also likely to be some further purchases from word of mouth. 
+As far as the cost side goes, there is money required to run your business and fulfill every order, so only a percent of the sales value is actually going to be profit (The % Margin). After this is factored in, you need to consider the cost of ad spend invested as well as any additional expenses (e.g. paying an ad agency to run your marketing on your behalf). It is only by measuring all these various factors that you are able to determine Return on Investment (ROI), which is calculated as (Net profit / Initial investment). 
+Just a typical work day, customizing your Performance Models
+Step 3: Map out your assumptions for each step in the Performance Model
+Now that you have modified the steps of your Performance Model to align with the steps of your prospective user journey, it is time to map out the assumptions for each step in the ‘Goal’ column. Unsure of where to start with estimating assumptions? 
+This article
+ has some good insights on do's and don'ts. There are a few high-level principles to keep in mind:
+1). The best predictor of the future is the past:
+ If you are trying to estimate data for prospects, the best place to start is with data your business has on existing clients you closed. For example, if you know on average that for past marketing efforts, 10% of the prospects who visited your website filled out a form, then let’s use that for future estimates. If you know that on average, your sales team closes 20% of prospects they hop on calls with, let’s assume that this will hold true in the future as well.
+2). 
+Trust your own data over benchmarks or estimates you find: 
+It is exceptionally common that clients come to me and say, “We know that we should be getting results like _____, because Google told us so.” As 
+this article
+ highlights, there are many issues with trusting benchmarks and estimates you find online, the biggest being that there is no standardization based on price or offer. In other words, the data you are seeing is likely for businesses that are very different from yours. Trust your own data above all else, and only seek answers elsewhere if really needed.
+3). Be conservative and bake in a margin of safety: 
+No estimate is going to be perfect. We are doing our best to approximate data so that we have a workable model, but always make sure you are making conservative estimates and are not setting goals that are going to be unattainable.
+When you realize working in marketing doesn’t allow you to escape math
+Step 4: With your assumptions mapped out, determine if you are able to hit your desired goals
+If you have followed steps 1 - 3 to a tee, all that remains is comparing the projected results versus the goals you have set to see if the proposal will allow you to hit your targets. For example, let’s say that you have determined that you need to hit a 1.5x ROI or better for the proposal to be worth pursuing. Once you map out all your steps and assumptions, is there a clear path to hitting that 1.5x ROI? A couple of things to consider here:
+1).
+ 
+What goals should I set?: 
+The process of determining ‘what is a good goal to set?’ can and should be its own article. For the time being, if you are using the ‘Basic’ model, a good starting point is a 3x ROAS or better. If you are using the ‘Advanced’ model, it is essential that you at least break-even (ROI > 0) and ideally get an ROI of .20 (20%) or better.
+2). What if I am not able to hit my goals based on the model?: 
+While I emphasized in step 3 that you should aim to be conservative with your estimates, for the final step, we are going to apply a bit of wiggle room to see if we can make the numbers work. The key thing is making sure that the numbers still fall within a reasonable range. 
+This article
+ does a good job of highlighting some of these ranges. 
+As far as what is reasonable, in most cases, a 10% - 20% improvement is probably acceptable, but I would not go too far beyond that. For example, if your team’s sales close rate has historically been 40%, maybe you test bumping the number up to 50% to see if that would help you to hit your goals. However, bumping the number to 70% is unrealistic and clearly out of range.
+3 Performance Model Examples
+I am well aware that the steps above are pretty high-level and are not easy to immediately grasp. For that reason, I am going to provide 3 performance model examples, with videos, to help you understand how this works in practice. For example 1, I am going to be using a slightly modified ‘Basic’ model. For examples 2 and 3, I am going to be used the ‘Advanced’ model. The company is going to be the same across all three examples: you sell a B2B software product for $200 / year and the average customer stays for 3 years for a customer lifetime value of $600. Your margins are 25%. 
+Example 1:
+ 
+You are currently spending $5,000/month on FB and Instagram Ads with a $100 CAC. An ad agency approaches you with a pitch: 
+-They charge $3,000/month.
+-They want to sign you for a 3-month pilot and promise to drop your CAC by 50% or more at the same budget level by the end of month 1.
+-If they don’t hit their target, they will refund you the entire fee and end the engagement.
+Your goal is to see an incremental ROI of 2x from the start of  month 2 onward. Should you accept their offer?
+The performance model I built out can be found 
+here
+ (Example 1) and I talk through it in the loom video link 
+here
+ and the video below:
+Example 2: 
+You open your email Monday morning and see the following marketing pitch:
+-For a one-time fee of $5,000, we will get a promotional piece published about your brand in the New York Times online Business section.
+-The New York Times is one of the most popular magazines in the world, and the online edition gets over 5,000,000 visits per day.
+Being published in the New York Times would be fantastic from a branding perspective, but to make it financially feasible for you, you would need to at least break-even (i.e. see an ROI greater than 0). Should you accept their offer? 
+In this specific example, it is important to be very precise when mapping out the assumptions. While the New York Times may get ‘over 5,000,000 visits per day’, you should ask for specifics on how many Impressions (i.e. Views) articles in the Business section receive. If they are unable to provide you with any data around this, you should likely pass on the opportunity. If they share some high-level estimates, you should ask for proof (e.g. Google Analytics reports) and you should ask for a few examples of specific articles that achieved the quoted number of views to ensure that these estimates are likely to hold up. 
+The ‘Impression-to-click CVR’ (i.e. clicks / # of views) is another thing you should ask for data about. It is imperative that you get real numbers here with proof. If they do not have any data to share with you, but you have had articles written about your brand in mid-to-large publications before, you can start with those as estimates. In this case, let’s say the average is a 1% ‘Impression-to-click-CVR’.
+When it comes to the ‘Click-to-form-fill CVR’ and the ‘Form-fill-to-purchase CVR’, hopefully this is data that you have internally. I would suggest being conservative with these numbers though, since only a small percent of the people who click are going to be in your target market and the traffic probably won’t be as receptive to your offer as those coming from your ad campaigns. In this case, let’s assume your ‘Click-to-form-fill CVR’ is 10% (on par with other channels), but your ‘Form-fill-to-purchase-CVR’ is 25% (half of what you see with leads from other channels). 
+With all of the assumptions mapped out, you can check out the performance model I created 
+here
+ (Example 2) and the loom video link 
+here
+ and video below:
+Example 3: 
+You are planning to attend an industry relevant trade show and receive an email from the event organizer with the following pitch: 
+-As an attendee of the event, we will offer you the chance to set up a booth at the trade show to promote your brand.
+-A 3-day minimum commitment is required and the cost is $20,000 total (a little under $6,700 / day). 
+-This is the biggest industry relevant trade show of its kind with over 50,000 attendees. 
+You determine that you will need an ROI of at least 1x (i.e. 100% or more) to justify making this investment. Should you do it? 
+Similar to what we did with the other examples, we are going to first customize our performance model and then start mapping out our assumptions. The two most crucial assumption to get right are the ‘Attendee-to-booth-visit CVR’ (what % of attendees will visit your booth) and the ‘Booth-visit-to-website CVR’ (of the attendees who visit your booth, what % will then check out your website). 
+For the ‘Attendee-to-booth-visit CVR’, it would be good to first ask the organizer if they have any data around this, but then also to see if you can get any data on what businesses had booths at the trade show previous years (this should be findable online if the event organizer won’t tell you directly). You can then message the CEOs and CMOs of those businesses directly on LinkedIn to see if they would be willing to share what their booth visit numbers looked like and whether they thought the booth investment was worth it. Most of them will likely ignore you, but expect at least a handful to help you out. 
+For the ‘Booth-visit-to-website CVR’, this one might be a little harder to estimate, but ideally, you have tested QR codes from previous events you have advertised at to see how many visitors ultimately follow-up and check out your website. This is also data you can ask the CEOs and CMOs you reach out to above. 
+Once you have those estimates, you just need to estimate the ‘Web-visit-to-form-fill CVR’, which we will assume here is 2x our historical average (since this traffic is industry relevant and hyper qualified) and the ‘Form-fill-to-purchase CVR’ (which we will estimate is on par with our historical averages, since our close rate is already very high). 
+With all of the assumptions mapped out, you can check out the performance model I created 
+here
+ (Example 3) and the loom video link 
+here
+ and video below:
+Conclusion
+Hopefully, after reading this article, you have a clear understanding on how to break-down and analyze any marketing pitch or proposal you are presented with. While some proposals are certainly going to be trickier than others, with the right set of tools, you should be in a solid position. You can develop quick ballpark estimates, and in the event you ever miss the mark, you can compare your actual results versus forecasts, see where you feel short, and make more informed decisions in the future.

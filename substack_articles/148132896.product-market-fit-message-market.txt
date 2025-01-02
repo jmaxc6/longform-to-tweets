@@ -1,0 +1,104 @@
+You stare at your computer screen in eager anticipation, confident in the knowledge that your success is imminent. You have spoken to dozens of prospects in your target market who have given your product rave reviews, your ad campaign drove a click-through-rate 3x higher than average, and you have driven hundreds of waitlist sign-ups with your $2,500 ad and landing page test. Now is the moment of truth. 
+You draft a message to your email list, which has swelled to well over 1,000 contacts, and hit ‘send’ to let them know that, “Our product is finally ready! Just click here to complete a payment of $100 and you will get immediate access to it!” You wait 5 minutes. 10 minutes. 15 minutes. Nothing happens. You check MailChimp again - is it possible the email didn’t send? Is it still in the draft folder? Nope - it has gone out to your full list. 10% have opened it, but not a single person has completed a payment, let alone clicked on a link in the email. As the hours drag on, you see a few purchases trickle in, but by the end of day two, when your total number of purchases sits at 4, it begins to slowly dawn on you that something has gone horribly wrong. “All those people who gave my product stellar reviews, all the clicks, all the email sign-ups - was it all a lie? Did I get played?” 
+“Any minute now…those orders are gonna start flooding in…”
+This exact scenario is one that thousands of aspiring startup founders or business owners experience daily. The reality is, this outcome is entirely predictable and preventable - you just need to know the best practices to validate your new business idea. The concept for this article was primarily inspired by 3 separate clients who reached out to me in the span of one week and all asked me if I could help them to run ads to a landing page in order to help them validate some new business ideas they had. While in the past, I would have jumped on this opportunity and started immediately setting things up, this time around, I instead asked myself, “Is there a better way to validate new ideas?” That question led me down a deep rabbit hole of research and reflection from my experience working closely with 100s of startups that culminated in this article. I hope you find it helpful. 
+Product Market Fit vs. Message Market Fit
+In the world of startups, achieving product market fit is considered one of the biggest and most meaningful milestones. As Marc Andreessen, one of Silicon Valley’s most prominent venture capitalists 
+says
+, “Product market fit means being in a good market with a product that can satisfy the needs of that market.” How do you know when you have achieved product market fit? Surprisingly, there is no solid consensus here. Like Justice Potter Stewart said in the landmark case on pornography, “
+I’ll know it when I see it
+.” Probably the best explanation I have heard is, “You will know you have hit product market fit when inbound demand for your product is so strong that you have trouble keeping up with it.” 
+“Product market fit? I’ll know it when I see it.”
+As I read article after article about founders who eventually found product market fit, I was confronted with a persistent question: “If a product needs to satisfy the needs of a market to achieve product market fit, is it possible to achieve product market fit before you have a product?” On the surface, it sounds like the answer should be a resounding ‘no’, yet I have been approached by dozens of startup founders over the years asking for help running ads to a landing page so they could test out new ideas and see if ‘they have product market fit’. It was through my attempt to answer the question above that I learned about message market fit. 
+Message market fit is determined by how appealing the messaging sounds to the customer, which differs from product market fit’s focus on how well the product meets the customer’s needs. One good example to help clarify the difference: McDonalds has achieved product market fit by satisfying their target market’s needs for cheap, fast, and consistent meals, and the needs they solve are well aligned with their messaging. If instead, McDonalds promoted themselves as ‘the pinnacle of fine dining’ and ‘Michelin star McDonalds’ they would be laughed out of the room. Both product market fit and message market fit are necessary; failing on either will result in a business with limited upside potential.
+Pitfalls to Avoid
+As I got deeper into the weeds, I realized startup founders were not properly distinguishing product market fit from message market fit. Furthermore, I came to conclude that because of this, there were a lot of assumptions that were being made which did not stand up to scrutiny and could easily lead to incorrect conclusions. A few examples that I want to share:
+1). 
+Running tests to get statistically significant data without considering what the data measures: 
+This is one of the most common pitfalls I run into when working closely with startups. They will be walking me through their ad tests and experiments and inevitably say something like, “We tested product messages A and B, message A had a click-through rate that was statistically significantly higher than message B, so that is the direction we took the product.” After resisting the urge to rip my hair out by its roots, I say, “Click-through-rate is a worse than useless metric. Never use it to guide any of your decision-making.” I do not think my retort has ever led to a response other than complete bewilderment, but allow me to explain. 
+Click-through-rate is calculated by dividing the number of people who clicked on your ad by the number of people who saw your ad, clicks / impressions. A click is a pretty low effort action and tells you nothing about the intensity of someone’s desire for your product, let alone if they would be willing to pay for it. Furthermore, good ad messaging is not designed to pique the interest of an entire audience - it is designed to reel in those who are a great fit for the product and deter those who are a poor fit. 
+Let’s use the competitive and intense fitness program CrossFit as an example. I can say with confidence that the ad messaging “Group fitness classes: get in shape with friends and have fun at the same time!” would produce a much better click-through rate than, “Elite fitness program to push through your limits and maximize your potential.” The former sounds breezy and approachable. The latter sounds fanatical and extreme. However, Susan, mom of 3, who wants to lose 5 pounds for the summer and loves a nice wine and cheese night with her girlfriends is gonna be disappointed when the first ad headline takes her to a CrossFit landing page. Your data may be statistically significant, but be mindful of what it actually measures. 
+“I just wanted a light tone-up for the summer, not a fitness bootcamp!”
+2). 
+Confusing target market interest with willingness to pay: 
+When it comes to assessing genuine target market interest, the only thing that truly matters is willingness to pay. You might have 20 straight user interviews where you are told, “Your product sounds great” and “This is exactly what I am looking for.” You might get 500 waitlist sign-ups within a single week. You might get 2,000 people to join your email list. But, unless you have actually seen proof that people are willing to put their money where their mouth is and pay you for your product, it is all a bunch of hot air. I will be talking later in the article about how best to broach the subject of asking for payment, but for now, just recognize that it is an essential step.  
+3). Failing to measure the intensity of interest in your product: 
+Sam Altman, former head of the startup accelerator YCombinator and a brilliant entrepreneur, has a well-known quote for founders: “
+It’s better to have 100 people love you, as opposed to 1,000,000 people who like you
+.” The issue with metrics like ad clicks, waitlist sign-ups, or joining an email list is that these are singular, quantitative metrics that do not allow you to gauge the intensity of interest in your product. Getting qualitative feedback from customer interviews and asking people to pay are far better measures of the intensity of customer desire. For example, someone you interview who says, “Can you text me immediately once this is available to the public? Is there any way to pay you right now so I can get first access?” is a pretty unmistakable signal of interest. You would never be able to assess this with just a landing page.
+4). Mistaking great product messaging for an actually great product: 
+You can have the greatest messaging and most hyped up product in the world, but that does not mean that customers love the actual product; they just love the messaging. In fact, overhyped product messaging is more likely to produce disappointment with the actual product, since happiness is expectations minus reality. A fantastic example of this was the music festival Fyre Festival. 
+The founder, Billy McFarland promised a star studded lineup of artists, gourmet meals, luxury villas, the chance to mingle with famous models and influencers, all on a beautiful and exotic island. The tremendous number of ticket purchases indicated that Fyre Festival easily hit message market fit, but the true product wildly missed the mark on product market fit. The event was horribly mis-managed and the crowd ended up sleeping in FEMA tents, eating ham and cheese sandwiches, with a few sporadic performances by mid-tier artists. 
+Swing and a miss. 
+The key point to takeaway is this: initial product purchases are a good measure of message market fit, but are not sufficient to fully assess product market fit. To properly gauge product market fit, the most important metrics are low churn, strong product reviews and feedback, frequency of repeat business, and word of mouth. If you are not crushing those metrics, it is more likely than not that your market loves the idea of your product but not the product itself.
+5). Failing to consider audience market fit: 
+A final point to consider, which I have rarely seen discussed, is what I will call audience market fit. In the context of online advertising, this measures how well the targeting options available via online ad platforms effectively map to your target market. 
+For example, let’s say that you have created a new luxury handbag and decide to run ads against Meta’s audience, ‘Luxury Shoppers.’ It’s natural to assume that this audience is thoroughly vetted and that these individuals all have a long track record of purchasing luxury goods. However, there is no guarantee of this, and often, it is very non-transparent how the data was actually classified. 
+For example, Meta may put someone into this category if they have ever ‘liked’ pages associated with luxury brands such as Gucci, Louis Vuitton, or Hermes. In reality, this may mean that someone simply appreciates the design or aesthetic of these brands or that they are aspirational shoppers with little to no disposable income. It is also likely to be based on data they shared on their Facebook profile a decade or more ago, which may no longer hold muster.
+The ‘luxury’ shoppers you are actually targeting.
+Years ago, BlueKai, a popular data broker, had a feature on their website that told you what data buckets you had been placed into based on your online browsing behavior. Curious about this, I entered my own name, and saw firsthand how random the classifications were. I had been placed in thousands of audiences from ‘Justin Bieber Fans’ to ‘Coca-Cola Lovers’ to ‘Aspiring Yogis.’ I was classified in the ‘18-24’ age bucket', and also the ‘25-32’ age bucket, the ‘33-38 age bucket’ and the ‘39-45 age bucket’. I was classified as both ‘single’ and ‘married’. All this is to say, the audiences on any of the ad platforms need to be taken with a huge grain of salt. Going back to the example described above, you could easily run a failed ad campaign against the ‘Luxury Shoppers’ audience without actually targeting any true luxury shoppers.
+The Right Way to Do It 
+To tie it all together, I am going to propose a more precise process to help you nail both message market fit and product market fit and to ensure you build something that people will actually use. This is not meant to be a cookie cutter formula (each company needs to craft their own path to success), but hopefully it should help steer you in the right direction:
+1). Think of a new product idea and a few ideal client profiles (ICPs) who might be a fit for it: 
+You cannot do anything until you have an initial product idea. Even if the idea itself is a bit fuzzy and needs some workshopping, it is important to start interviewing potential prospects (known as ideal client profiles or ICPs) to assess their needs and to determine who might be a fit for it. Some best practices on how to identify your ICPs can be found 
+here
+.
+2). Find prospects to interview and begin speaking with them to narrow down your ICPs: 
+Once you have a rough idea of who your ICPs are, I would begin reaching out to them to set up product interviews. How best to find these people? Consider doing list building using a tool like 
+Clay
+ and then outreach via email using a tool like 
+Apollo
+, LinkedIn messaging using a tool like 
+Phantombuster
+, or a combination of various channels using a tool like 
+LaGrowthMachine
+. Most people love sharing their opinion, and if you have a sufficiently large prospect list, you can likely schedule a sufficient number of user interviews for free. If prospects are not biting, I would offer them a $20 Amazon gift card for their time. 
+As far as how best to interview prospects to assess their needs, volumes have already been written about this, but if you are looking for a place to start, I would check out “
+The Mom Test
+” (summary 
+here
+). The title is based on the idea that you should not ask your mom whether your business is a good idea, because she loves you and will lie to you. Instead, ask questions that will give you concrete facts about your customer’s lives and world views.
+“Awww sweetie, I love your business idea and the world’s gonna love it too!”
+As a high-level rule, you should err on the side of too many user interviews rather than too little. It is not unreasonable to talk to 50+ prospects. You will know that you have talked to a sufficient number of people when you start hearing the same feedback over and over again. By the end of this process, you should have narrowed down your total number of ICPs to three or less. Do not even consider running ads to a landing page at this point; you will be lighting money on fire if you do. 
+3). Create an MVP or prototype and get feedback from your ICPs: 
+While some founders have little to no technical abilities and are convinced they need to raise money first then build later, I would generally advise against this. It is easier than ever to build a prototype or minimum viable product (MVP) with design tools like 
+Figma
+ and 
+Canva
+, no code solutions like 
+Bubble.io
+, code assistants like 
+Github CoPilot
+ and talented contractors on 
+UpWork
+. You only get so many shots at failed raises, and if you raise a lot of money upfront then find there is no real demand for your product, you are sure to burn bridges. Start with something simple that solves the basic problems of your ICPs, do another round of user interviews to get feedback from them and iterate off that feedback.
+4). With your updated MVP, assess willingness to pay: 
+After you have gathered some initial feedback from your ICPs and implemented that feedback, it is time to assess willingness to pay. As stated earlier in the article, willingness to pay is the only thing that genuinely matters as far as assessing genuine interest in your product. As 
+this article
+ does a great job of describing, there are three different potential pitches you can make to prospects to assess their willingness to pay:
+Pitch One: Ask the prospect to prepay for a set period of time (i.e. 6 or 12 months) in exchange for a preferential discount, i.e. for each user they sign up and pay for now, they get one free when you launch. Or perhaps they get a lifetime discount of 20%.
+Pitch Two: If you face opposition to paying up front, which I am sure you will get from some prospects, you can try an alternative approach of asking for a holding deposit. Even if you make it fully refundable (as 
+Tesla did with the Model 3
+) the fact that someone actually handed over money in the first place is much better than getting no deposit at all.
+Pitch Three: If the up front payment and the deposit fail, the fallback I would put to the prospect is to sign a letter of intent. This should stipulate the price of your product or offering and the prospect’s interest in licensing or buying said product or service if you are able to deliver on certain criteria.
+Elon gauged willingness to pay before building product - you should too.
+While there is no hard and fast rule of ‘once you have _____ number of pre-orders, move to the next step’, you can at least tell that you are not ready to move to the next step if you are unable to get a minimum of 3-5 pre-orders from each of your ICPs.
+5). Run an ads test to narrow down your ICPs further and help measure message market fit: 
+Assuming you now have three or less ICPs, and have some promise of pre-orders from each of them, running ads to a landing page now actually makes some sense. Why does an ads test now make sense now and not earlier in the process? 
+-First, because you have narrowed down your ICPs to three or less. If you had 10 ICPs and wanted to test 3 messages to see which resonated most, that would be 30 different scenarios. If you spent $500 per scenario, that is $15k to test ($500 x 30). On the flip-side, if you had 3 ICPs and 3 messages, the same test would only be $4.5k to test ($500 x 9), saving you a good amount of money. 
+-Second, because it is harder to give an in-depth view into your prototype (let alone, enable a prototype demo) with an online ads campaign, so it is trickier to assess willingness to pay. But, if you have already confirmed willingness to pay for each ICP via user interviews, then doing a test to measure waitlist sign-ups can tell you, directionally, which ICP is likely to be most receptive to your product and which message lands best. This gives you great insight into message market fit, data that is very valuable in the event you raise money from investors.
+As far as setting yourself up for success on the ads test, make sure you are following 
+landing page best practices
+, that you are 
+realistic about benchmarks
+ and that you are actually making decisions off of 
+statistically significant data
+.
+6). Raise money (if needed): 
+If you demonstrated willingness to pay, narrowed down to a single ICP (or two max), and have solid data from an ad test on message market fit, you are in a fantastic position to raise money. While best practices on fundraising is not an area I am an expert in, my friend 
+Jack Kuveke
+ is a fantastic fundraising coach if you need any help.
+7). Build out a fully fledged product and keep iterating until you hit product market fit: 
+With a successful fundraise in tow, you are in a great place to hire full-time software engineers to help you create your dream product and hit product market fit. As stated earlier, while there is no single set of benchmarks that confirm you have hit product market fit, low churn, strong product reviews and feedback, frequency of repeat business, and word of mouth are all good metrics to keep an eye on. As far as qualitative feedback goes, “You will know you have hit product market fit when inbound demand for your product is so strong that you have trouble keeping up with it.” 
+Conclusion
+While everyone has their own journey to product market fit and message market fit, I hope the information shared above helps to provide a clear roadmap to help you on your journey. I also hope it helps to bridge the gap between the many articles out there that suggest ads and landing pages are the optimal way to validate new startup ideas and those that state user interviews are far superior.

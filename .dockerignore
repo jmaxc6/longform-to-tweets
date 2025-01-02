@@ -1,0 +1,44 @@
+# Ignore Git repo files
+.git
+.gitignore
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+venv/
+env/
+
+# Ignore log files
+*.log
+
+# Ignore Docker files (other Docker contexts if present)
+.dockerignore
+Dockerfile.*
+
+# Ignore local editor/IDE configurations
+.vscode/
+.idea/
+*.swp
+
+# Ignore large/unnecessary folders
+node_modules/
+build/
+dist/
+
+# Ignore test files and directories
+tests/
+*.test.*
+
+# Ignore deployment or CI/CD artifacts
+*.zip
+*.tar
+*.gz
+*.bak
+
+# Ignore sensitive keys or configs (if any)
+*.key
+*.pem
