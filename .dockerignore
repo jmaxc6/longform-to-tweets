@@ -12,6 +12,10 @@ __pycache__/
 venv/
 env/
 
+# Ignore local environment files
+.env
+*.env
+
 # Ignore log files
 *.log
 
