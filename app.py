@@ -5,7 +5,7 @@ import re
 import unicodedata
 import time
 import zipfile
-from threading import Thread
+from threading import Thread, Lock
 from crewai import Agent, Task, Crew
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
@@ -48,8 +48,9 @@ reviewer_agent = Agent(
     verbose=True
 )
 
-# Global variable to track pipeline status
-pipeline_status = {"status": "Idle", "progress": 0}
+# Global variables
+pipeline_status = {"status": "Idle", "progress": 0, "details": []}
+pipeline_lock = Lock()  # To make `pipeline_status` updates thread-safe
 
 # Set upload folder and allowed extensions
 UPLOAD_FOLDER = "uploaded_files"
@@ -101,7 +102,8 @@ def upload_folder():
         file.save(filepath)
 
         # Set pipeline status to running immediately
-        pipeline_status = {"status": "Running", "progress": 0}
+        with pipeline_lock:
+            pipeline_status = {"status": "Running", "progress": 0, "details": []}
         print(f"Pipeline status set to running: {pipeline_status}")
 
         # Start processing in a background thread
@@ -124,7 +126,8 @@ def process_file(filepath):
         with zipfile.ZipFile(filepath, 'r') as zip_ref:
             zip_ref.extractall(extract_path)
     except zipfile.BadZipFile:
-        pipeline_status["status"] = "Error: Invalid ZIP file"
+        with pipeline_lock:
+            pipeline_status["status"] = "Error: Invalid ZIP file"
         return
 
     # Process the extracted files
@@ -140,37 +143,42 @@ def run_pipeline(folder_path):
 
     # Validate folder path
     if not os.path.exists(folder_path):
-        pipeline_status = {"status": f"Folder '{folder_path}' does not exist.", "progress": 0}
+        with pipeline_lock:
+            pipeline_status = {"status": f"Folder '{folder_path}' does not exist.", "progress": 0}
         return
 
     # Load articles and filenames
     file_names, articles = load_substack_articles(folder_path)
     if not articles:
-        pipeline_status = {"status": "No articles found in the specified folder.", "progress": 0}
+        with pipeline_lock:
+            pipeline_status = {"status": "No articles found in the specified folder.", "progress": 0}
         return
 
-    pipeline_status = {"status": "Running", "progress": 0}
-    print(f"Pipeline started: {pipeline_status}")
+    with pipeline_lock:
+        pipeline_status = {"status": "Running", "progress": 0, "details": []}
 
     final_results = []
 
     for idx, (name, article) in enumerate(zip(file_names, articles)):
-        pipeline_status["progress"] = int(((idx + 1) / len(articles)) * 100)
-        pipeline_status["status"] = f"Article {idx + 1} Completed"
+        with pipeline_lock:
+            pipeline_status["progress"] = int(((idx + 1) / len(articles)) * 100)
+            pipeline_status["status"] = f"Article {idx + 1} Completed"
+            pipeline_status["details"].append(f"Article {idx + 1} Completed")
         print(f"Updated pipeline status: {pipeline_status}")
 
         try:
+            # Define and execute tasks
             analyze_task = Task(
                 name=f"Analyze {name}",
                 agent=analyzer_agent,
-                description=f"Summarize and analyze: {article}",
+                description=f"Summarize and analyze the following article:\n\n{article}",
                 expected_output="A summary and key themes for tweet generation.",
                 timeout=60
             )
             generate_tweet_task = Task(
                 name=f"Generate Tweets for {name}",
                 agent=tweet_generator_agent,
-                description="Generate engaging tweets based on the analysis.",
+                description="Generate 5 engaging tweets based on the analysis.",
                 expected_output="5 engaging and creative tweets.",
                 timeout=60
             )
@@ -182,7 +190,7 @@ def run_pipeline(folder_path):
                 timeout=60
             )
 
-            # Run tasks
+            # Run tasks sequentially
             crew = Crew(
                 agents=[analyzer_agent, tweet_generator_agent, reviewer_agent],
                 tasks=[analyze_task, generate_tweet_task, review_task]
@@ -195,7 +203,8 @@ def run_pipeline(folder_path):
             final_results.append((name, cleaned_tweets))
 
         except Exception as e:
-            pipeline_status = {"status": f"Error processing {name}: {str(e)}"}
+            with pipeline_lock:
+                pipeline_status = {"status": f"Error processing {name}: {str(e)}"}
             return
 
     # Save results to CSV
@@ -207,7 +216,8 @@ def run_pipeline(folder_path):
                 writer.writerow([name, tweet])
 
     # Update pipeline status to finished
-    pipeline_status = {"status": "Pipeline Finished", "progress": 100}
+    with pipeline_lock:
+        pipeline_status = {"status": "Pipeline Finished", "progress": 100, "details": ["Pipeline Finished"]}
     print(f"Pipeline finished: {pipeline_status}")
 
 # Route: Progress Endpoint
@@ -218,10 +228,8 @@ def get_progress():
     # Log the current progress for debugging purposes
     print(f"Pipeline progress requested: {pipeline_status}")
 
-    return jsonify({
-        "status": pipeline_status.get("status", "Idle"),
-        "progress": pipeline_status.get("progress", 0)
-    })
+    with pipeline_lock:
+        return jsonify(pipeline_status)
 
 # Route: Download CSV
 @app.route("/download", methods=["GET"])
@@ -234,9 +242,4 @@ def download_csv():
 if __name__ == "__main__":
     print("Starting Flask app...", flush=True)
     app.run(host="0.0.0.0", port=8000)
-
-
-
-
-
 
