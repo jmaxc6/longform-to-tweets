@@ -4,10 +4,13 @@ import glob
 import re
 import unicodedata
 import time
+import zipfile
+from threading import Thread
 from crewai import Agent, Task, Crew
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template, send_file
+from werkzeug.utils import secure_filename
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -48,6 +51,15 @@ reviewer_agent = Agent(
 # Global variable to track pipeline status
 pipeline_status = {"status": "Idle", "progress": 0}
 
+# Set upload folder and allowed extensions
+UPLOAD_FOLDER = "uploaded_files"
+ALLOWED_EXTENSIONS = {'zip'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 # Utility function to load Substack articles
 def load_substack_articles(folder_path):
     articles = []
@@ -71,138 +83,157 @@ def clean_text(text):
 def home():
     return render_template("index.html")
 
-# Route: Run Pipeline
-@app.route("/run", methods=["POST"])
-def run_pipeline():
+# Route: Upload ZIP file and start processing in background
+@app.route("/upload", methods=["POST"])
+def upload_folder():
     global pipeline_status
 
-    # Extract folder path and output file from request
-    folder_path = request.form.get("folder_path", "./substack_articles")
-    output_csv = request.form.get("output_csv", "output_tweets.csv")
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part provided in the request'}), 400
 
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file for upload'}), 400
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
+
+        # Set pipeline status to running immediately
+        pipeline_status = {"status": "Running", "progress": 0}
+        print(f"Pipeline status set to running: {pipeline_status}")
+
+        # Start processing in a background thread
+        thread = Thread(target=process_file, args=(filepath,))
+        thread.start()
+
+        # Respond to the client immediately
+        return jsonify({"message": "File uploaded successfully. Processing started."}), 200
+
+    return jsonify({'error': 'Invalid file format, only ZIP files are allowed'}), 400
+
+def process_file(filepath):
+    """
+    Extracts and processes the uploaded file in the background.
+    """
+    extract_path = os.path.join(app.config['UPLOAD_FOLDER'], "extracted")
+    os.makedirs(extract_path, exist_ok=True)
+
+    try:
+        with zipfile.ZipFile(filepath, 'r') as zip_ref:
+            zip_ref.extractall(extract_path)
+    except zipfile.BadZipFile:
+        pipeline_status["status"] = "Error: Invalid ZIP file"
+        return
+
+    # Process the extracted files
+    folder_path = extract_path
+    run_pipeline(folder_path)
+
+# Pipeline logic
+def run_pipeline(folder_path):
+    global pipeline_status
+
+    output_csv = "output_tweets.csv"
     print(f"Starting pipeline with folder_path: {folder_path}, output_csv: {output_csv}", flush=True)
 
     # Validate folder path
     if not os.path.exists(folder_path):
         pipeline_status = {"status": f"Folder '{folder_path}' does not exist.", "progress": 0}
-        print(f"Error: {pipeline_status['status']}", flush=True)
-        return jsonify({"error": pipeline_status["status"]}), 400
+        return
 
     # Load articles and filenames
-    start_time = time.time()
     file_names, articles = load_substack_articles(folder_path)
-    print(f"Loaded {len(articles)} articles in {time.time() - start_time:.2f} seconds.", flush=True)
-
     if not articles:
         pipeline_status = {"status": "No articles found in the specified folder.", "progress": 0}
-        print(f"Error: {pipeline_status['status']}", flush=True)
-        return jsonify({"error": pipeline_status["status"]}), 400
+        return
+
+    pipeline_status = {"status": "Running", "progress": 0}
+    print(f"Pipeline started: {pipeline_status}")
 
     final_results = []
-    pipeline_status = {"status": "Running", "progress": 0}
 
-    # Process each article
     for idx, (name, article) in enumerate(zip(file_names, articles)):
-        print(f"Processing Article {idx+1}: {name}", flush=True)
         pipeline_status["progress"] = int(((idx + 1) / len(articles)) * 100)
-        pipeline_status["status"] = f"Processing Article {idx+1} of {len(articles)}: {name}"
+        pipeline_status["status"] = f"Article {idx + 1} Completed"
+        print(f"Updated pipeline status: {pipeline_status}")
 
         try:
-            start_time = time.time()
             analyze_task = Task(
-                name=f"Analyze Article {idx+1}",
+                name=f"Analyze {name}",
                 agent=analyzer_agent,
-                description=f"Summarize the following article and extract tweetable points:\n\n{article}",
-                expected_output="A concise summary and key themes for tweet generation.",
+                description=f"Summarize and analyze: {article}",
+                expected_output="A summary and key themes for tweet generation.",
                 timeout=60
             )
-
             generate_tweet_task = Task(
-                name=f"Generate Tweets for Article {idx+1}",
+                name=f"Generate Tweets for {name}",
                 agent=tweet_generator_agent,
-                description=(
-                    "Based on the article summary, generate a list of 5 engaging tweets. "
-                    "Each tweet must be at least 2 sentences long and avoid using any hashtags (#). "
-                    "Do not number the tweets or include bullet points. Output each tweet as plain text."
-                ),
-                expected_output="A plain text list of 5 well-crafted tweets, each at least 2 sentences long.",
+                description="Generate engaging tweets based on the analysis.",
+                expected_output="5 engaging and creative tweets.",
                 timeout=60
             )
-
             review_task = Task(
-                name=f"Review Tweets for Article {idx+1}",
+                name=f"Review Tweets for {name}",
                 agent=reviewer_agent,
-                description=(
-                    "Refine the generated tweets for clarity and engagement. "
-                    "Each tweet must be at least 2 sentences long and avoid using any hashtags (#)."
-                ),
-                expected_output="A refined and polished list of tweets.",
+                description="Refine tweets for clarity and engagement.",
+                expected_output="Polished and refined tweets.",
                 timeout=60
             )
 
-            # Run the tasks sequentially
-            task_start_time = time.time()
-            print(f"Starting Crew for Article {idx+1}", flush=True)
+            # Run tasks
             crew = Crew(
                 agents=[analyzer_agent, tweet_generator_agent, reviewer_agent],
-                tasks=[analyze_task, generate_tweet_task, review_task],
-                verbose=True
+                tasks=[analyze_task, generate_tweet_task, review_task]
             )
-
             result = crew.kickoff()
-            print(f"Crew completed in {time.time() - task_start_time:.2f} seconds.", flush=True)
 
-            # Extract and clean results
-            result_start_time = time.time()
+            # Extract results
             output_text = result.content if hasattr(result, 'content') else str(result)
-            cleaned_tweets = [clean_text(tweet) for tweet in output_text.strip().split("\n") if tweet.strip()]
+            cleaned_tweets = [clean_text(tweet) for tweet in output_text.split("\n") if tweet.strip()]
             final_results.append((name, cleaned_tweets))
-            print(f"Result processing took {time.time() - result_start_time:.2f} seconds.", flush=True)
 
         except Exception as e:
-            print(f"Error processing Article {idx+1}: {e}", flush=True)
-            pipeline_status["status"] = f"Error processing Article {idx+1}: {e}"
-            return jsonify({"error": str(e)}), 500
+            pipeline_status = {"status": f"Error processing {name}: {str(e)}"}
+            return
 
     # Save results to CSV
-    print("Saving results to CSV.", flush=True)
-    csv_start_time = time.time()
     with open(output_csv, mode='w', newline='', encoding='utf-8') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(["Original Article Name", "Final Tweet"])
         for name, tweets in final_results:
             for tweet in tweets:
                 writer.writerow([name, tweet])
-    print(f"CSV saved in {time.time() - csv_start_time:.2f} seconds.", flush=True)
 
-    pipeline_status = {"status": "Completed", "progress": 100}
-    print("Pipeline completed successfully.", flush=True)
-    return jsonify({"message": "Pipeline completed successfully.", "output_csv": output_csv})
+    # Update pipeline status to finished
+    pipeline_status = {"status": "Pipeline Finished", "progress": 100}
+    print(f"Pipeline finished: {pipeline_status}")
 
-# Route: Get Pipeline Status
-@app.route("/status", methods=["GET"])
-def get_status():
-    return jsonify(pipeline_status)
+# Route: Progress Endpoint
+@app.route("/progress", methods=["GET"])
+def get_progress():
+    global pipeline_status
+
+    # Log the current progress for debugging purposes
+    print(f"Pipeline progress requested: {pipeline_status}")
+
+    return jsonify({
+        "status": pipeline_status.get("status", "Idle"),
+        "progress": pipeline_status.get("progress", 0)
+    })
 
 # Route: Download CSV
 @app.route("/download", methods=["GET"])
 def download_csv():
     file_path = "output_tweets.csv"
-    print(f"Download request received for file: {file_path}", flush=True)
-
     if not os.path.exists(file_path):
-        print("Error: Output file not found.", flush=True)
         return jsonify({"error": "Output file not found. Please run the pipeline first."}), 400
-
-    print("Sending file to client.", flush=True)
     return send_file(file_path, as_attachment=True)
 
 if __name__ == "__main__":
     print("Starting Flask app...", flush=True)
-    try:
-        app.run(host="0.0.0.0", port=8000)
-    finally:
-        print("Flask app has stopped running.", flush=True)
+    app.run(host="0.0.0.0", port=8000)
 
 
 

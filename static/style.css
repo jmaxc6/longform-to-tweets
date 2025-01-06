@@ -3,15 +3,45 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #FFFFFF; /* Background Color */
+    color: #2C3E50; /* Text Color */
+    line-height: 1.8; /* Increased spacing between lines */
+    text-align: center; /* Center all text */
 }
 
 /* Header Styles */
 h1 {
     text-align: center;
     margin-top: 20px;
-    color: #2c3e50;
+    color: #001F3F; /* Primary Color */
+}
+
+/* Container Styles */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ADB5BD; /* Secondary Color */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #FFFFFF; /* Background Color */
+}
+
+/* Instructions Section */
+section#instructions {
+    background-color: #ADB5BD; /* Secondary Color */
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+section#instructions h2 {
+    color: #001F3F; /* Primary Color */
+    margin-bottom: 10px;
+}
+
+section#instructions p {
+    margin-bottom: 20px; /* Added spacing between lines */
 }
 
 /* Form Styles */
@@ -20,23 +50,25 @@ form {
     max-width: 500px;
     margin: 20px auto;
     padding: 20px;
-    background: #ffffff;
+    background: #FFFFFF; /* Background Color */
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ADB5BD; /* Secondary Color */
 }
 
 form label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
-    color: #2c3e50;
+    color: #2C3E50; /* Text Color */
 }
 
-form input[type="text"] {
+form input[type="text"],
+form input[type="file"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #ADB5BD; /* Secondary Color */
     border-radius: 4px;
 }
 
@@ -44,16 +76,17 @@ form button {
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    color: #fff;
-    background: #2c3e50;
+    color: #FFFFFF; /* Text Color */
+    background: #001F3F; /* Primary Color */
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.3s;
+    margin-top: 20px; /* Added extra spacing between buttons */
 }
 
 form button:hover {
-    background: #34495e;
+    background: #FF851B; /* Accent Color */
 }
 
 /* Status Message Styles */
@@ -62,18 +95,18 @@ form button:hover {
     max-width: 500px;
     margin: 20px auto;
     padding: 10px;
-    background: #dff0d8;
-    color: #3c763d;
+    background: #DFF0D8; /* Light green for success */
+    color: #3C763D; /* Dark green text */
     border-radius: 8px;
-    border: 1px solid #d6e9c6;
+    border: 1px solid #D6E9C6;
     text-align: center;
 }
 
 /* Error Message Styles */
 #error {
-    background: #f2dede;
-    color: #a94442;
-    border: 1px solid #ebccd1;
+    background: #F2DEDE; /* Light red for error */
+    color: #A94442; /* Dark red text */
+    border: 1px solid #EBCCD1;
 }
 
 /* Footer Styles */
@@ -81,5 +114,4 @@ footer {
     text-align: center;
     margin-top: 50px;
     font-size: 14px;
-    color: #aaa;
-}
+    color: #ADB5

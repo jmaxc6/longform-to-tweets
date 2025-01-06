@@ -4,22 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agents Dashboard</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-    <h1>AI Agents Dashboard</h1>
-    <form id="runPipelineForm" method="POST" action="/run">
-        <label for="folderPath">Substack Articles Folder Path:</label><br>
-        <input type="text" id="folderPath" name="folder_path" value="./substack_articles" required><br><br>
-        
-        <label for="outputCsv">Output CSV File Name:</label><br>
-        <input type="text" id="outputCsv" name="output_csv" value="output_tweets.csv" required><br><br>
-        
-        <button type="submit">Run Pipeline</button>
-    </form>
+    <div class="container">
+        <h1>AI Agents Dashboard</h1>
 
-    <h2>Pipeline Status</h2>
-    <div id="status">
-        <p>No tasks running yet.</p>
+        <!-- Instructions Section -->
+        <section id="instructions">
+            <h2>3 Simple Steps:</h2>
+            <p>1. Hit <strong>"Choose File"</strong> and select a ZIP file containing .txt articles.</p>
+            <p>2. Hit <strong>"Upload and Process"</strong> to start processing the file.</p>
+            <p>3. You will receive a notification once the script finishes running and can download the output at <a href="http://localhost:8000/download" target="_blank">http://localhost:8000/download</a>.</p>
+        </section>
+
+        <!-- Form to upload a ZIP file -->
+        <form id="uploadForm" method="POST" enctype="multipart/form-data">
+            <h2>Upload Your Articles</h2>
+            <label for="zipFile">Upload a ZIP file containing .txt articles:</label>
+            <input type="file" id="zipFile" name="file" accept=".zip" required>
+            <button type="submit">Upload and Process</button>
+        </form>
+
+        <!-- Pipeline Status Section -->
+        <h2>Pipeline Status</h2>
+        <div id="status">
+            <p>No tasks running yet.</p>
+        </div>
+
+        <!-- Check Progress Button -->
+        <button id="checkProgress">Check Progress</button>
     </div>
+
+    <script>
+        let isPipelineRunning = false; // Track if the pipeline is running
+
+        // Prevent form submission from redirecting the page
+        document.getElementById("uploadForm").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Stop the default form submission
+
+            const fileInput = document.getElementById("zipFile");
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            // Upload the file via fetch
+            try {
+                const response = await fetch("/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    // Change #1: Show a pop-up notification
+                    alert("The script is running. You can check its progress by clicking the Check Progress button.");
+
+                    // Change #2: Update the green status text
+                    document.getElementById("status").innerHTML = "<p>Your task is running</p>";
+                    isPipelineRunning = true; // Mark the pipeline as running
+                    pollProgress(); // Start polling progress
+                } else {
+                    alert("Error: " + (data.error || "Unable to upload file."));
+                }
+            } catch (error) {
+                console.error("Upload error:", error);
+                alert("An error occurred while uploading the file.");
+            }
+        });
+
+        // Function to poll progress
+        function pollProgress() {
+            const interval = setInterval(async () => {
+                try {
+                    const response = await fetch("/progress");
+                    const data = await response.json();
+
+                    const statusDiv = document.getElementById("status");
+
+                    // Update the status with real-time progress
+                    if (data.details.length > 0) {
+                        isPipelineRunning = true; // Keep pipeline marked as running
+                        statusDiv.innerHTML = data.details.join("<br>"); // Show progress as plain text
+                    }
+
+                    // Stop polling if the pipeline is complete
+                    if (data.status === "Pipeline Finished") {
+                        clearInterval(interval);
+                        isPipelineRunning = false; // Mark pipeline as not running
+                        statusDiv.innerHTML += "<br><strong>Pipeline Finished</strong><br>";
+                        statusDiv.innerHTML += "<p>You can download your file at <a href='/download' target='_blank'>http://localhost:8000/download</a></p>";
+                    }
+                } catch (error) {
+                    console.error("Error fetching progress:", error);
+                }
+            }, 2000); // Poll every 2 seconds
+        }
+
+        // Manual "Check Progress" button
+        document.getElementById("checkProgress").addEventListener("click", async function () {
+            try {
+                const response = await fetch("/progress");
+                const data = await response.json();
+
+                const statusDiv = document.getElementById("status");
+
+                // Prevent progress reset if the pipeline is running and updates exist
+                if (isPipelineRunning && data.details.length > 0) {
+                    statusDiv.innerHTML = data.details.join("<br>");
+                    return;
+                }
+
+                // Update the status with real-time progress
+                if (data.details.length > 0) {
+                    statusDiv.innerHTML = data.details.join("<br>"); // Show progress as plain text
+                } else if (isPipelineRunning) {
+                    statusDiv.innerHTML = "<p>Your task is running</p>";
+                } else {
+                    statusDiv.innerHTML = "<p>No tasks running yet.</p>";
+                }
+            } catch (error) {
+                console.error("Error fetching progress:", error);
+                document.getElementById("status").innerHTML = "<p>Error fetching progress.</p>";
+            }
+        });
+    </script>
 </body>
 </html>
+
+
+
+
+
