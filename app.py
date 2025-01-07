@@ -231,6 +231,17 @@ def get_progress():
     with pipeline_lock:
         return jsonify(pipeline_status)
 
+# Route: Reset Endpoint
+@app.route("/reset", methods=["POST"])
+def reset_pipeline():
+    global pipeline_status
+
+    with pipeline_lock:
+        pipeline_status = {"status": "Idle", "progress": 0, "details": []}
+    print("Pipeline reset to initial state.")
+
+    return jsonify({"message": "Pipeline has been reset."}), 200
+
 # Route: Download CSV
 @app.route("/download", methods=["GET"])
 def download_csv():
@@ -242,5 +253,6 @@ def download_csv():
 if __name__ == "__main__":
     print("Starting Flask app...", flush=True)
     app.run(host="0.0.0.0", port=8000)
+
 
 

@@ -31,6 +31,9 @@
         <div id="status">
             <p>No tasks running yet.</p>
         </div>
+
+        <!-- Reset Button -->
+        <button id="resetPipeline" style="display: none;">Reset</button>
     </div>
 
     <script>
@@ -53,13 +56,10 @@
 
                 const data = await response.json();
                 if (response.ok) {
-                    // Change #2: Update the pop-up message
                     alert("The script is running. You can see the script's progress below.");
-
-                    // Update the status text
                     document.getElementById("status").innerHTML = "<p>Your task is running</p>";
-                    isPipelineRunning = true; // Mark the pipeline as running
-                    pollProgress(); // Start polling progress
+                    isPipelineRunning = true;
+                    pollProgress();
                 } else {
                     alert("Error: " + (data.error || "Unable to upload file."));
                 }
@@ -78,31 +78,45 @@
 
                     const statusDiv = document.getElementById("status");
 
-                    // Update the status with real-time progress
-                    if (data.status !== "Idle" && data.status !== "Pipeline Finished") {
-                        isPipelineRunning = true;
-                        statusDiv.innerHTML = `<p>${data.status}</p>`; // Remove bullet points
+                    if (data.details.length > 0) {
+                        statusDiv.innerHTML = data.details.join("<br>");
                     }
 
-                    // Stop polling if the pipeline is complete
                     if (data.status === "Pipeline Finished") {
                         clearInterval(interval);
                         isPipelineRunning = false;
                         statusDiv.innerHTML += "<p><strong>Pipeline Finished</strong></p>";
                         statusDiv.innerHTML += "<p>You can download your file at <a href='/download' target='_blank'>http://localhost:8000/download</a></p>";
+
+                        // Show the Reset button after the pipeline finishes
+                        document.getElementById("resetPipeline").style.display = "block";
                     }
                 } catch (error) {
                     console.error("Error fetching progress:", error);
                 }
             }, 2000); // Poll every 2 seconds
         }
+
+        // Reset pipeline
+        document.getElementById("resetPipeline").addEventListener("click", async function () {
+            try {
+                const response = await fetch("/reset", {
+                    method: "POST",
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert("Pipeline has been reset.");
+                    document.getElementById("status").innerHTML = "<p>No tasks running yet.</p>";
+                    document.getElementById("resetPipeline").style.display = "none";
+                } else {
+                    alert("Error: " + (data.error || "Unable to reset the pipeline."));
+                }
+            } catch (error) {
+                console.error("Reset error:", error);
+                alert("An error occurred while resetting the pipeline.");
+            }
+        });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
