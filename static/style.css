@@ -115,3 +115,24 @@ footer {
     margin-top: 50px;
     font-size: 14px;
     color: #ADB5
+}
+
+/* Styling for the Reset button */
+.reset-button {
+    display: none; /* Hidden by default */
+    width: 50%; /* Adjusted to match the green text box */
+    margin: 20px auto; /* Centered horizontally */
+    padding: 10px;
+    font-size: 16px;
+    color: #FFFFFF;
+    background: #001F3F;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.reset-button:hover {
+    background: #003366;
+}
+    
