@@ -178,15 +178,15 @@ def run_pipeline(folder_path):
             generate_tweet_task = Task(
                 name=f"Generate Tweets for {name}",
                 agent=tweet_generator_agent,
-                description="Generate 5 engaging tweets based on the analysis.",
-                expected_output="5 engaging and creative tweets.",
+                description="Generate 5 engaging tweets based on the analysis. Avoid using quotes at the beginning or end and do not include hashtags.",
+                expected_output="5 engaging and creative tweets without quotes or hashtags.",
                 timeout=60
             )
             review_task = Task(
                 name=f"Review Tweets for {name}",
                 agent=reviewer_agent,
-                description="Refine tweets for clarity and engagement.",
-                expected_output="Polished and refined tweets.",
+                description="Refine tweets for clarity and engagement. Ensure the tweets do not use quotes at the start or end and contain no hashtags.",
+                expected_output="Polished and refined tweets without quotes or hashtags.",
                 timeout=60
             )
 
@@ -242,4 +242,5 @@ def download_csv():
 if __name__ == "__main__":
     print("Starting Flask app...", flush=True)
     app.run(host="0.0.0.0", port=8000)
+
 
