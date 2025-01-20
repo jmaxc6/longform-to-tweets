@@ -5,11 +5,12 @@ import re
 import unicodedata
 import time
 import zipfile
+import shutil
 from threading import Thread, Lock
 from crewai import Agent, Task, Crew
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify, render_template, send_file
+from flask import Flask, request, jsonify, render_template, send_file, make_response
 from werkzeug.utils import secure_filename
 
 # Initialize Flask app
@@ -54,6 +55,8 @@ pipeline_lock = Lock()  # To make `pipeline_status` updates thread-safe
 
 # Set upload folder and allowed extensions
 UPLOAD_FOLDER = "uploaded_files"
+EXTRACTED_FOLDER = os.path.join(UPLOAD_FOLDER, "extracted")
+os.makedirs(EXTRACTED_FOLDER, exist_ok=True)  # Ensure the folder exists
 ALLOWED_EXTENSIONS = {'zip'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -86,6 +89,7 @@ def home():
 
 # Route: Upload ZIP file and start processing in background
 @app.route("/upload", methods=["POST"])
+
 def upload_folder():
     global pipeline_status
 
@@ -185,8 +189,8 @@ def run_pipeline(folder_path):
             review_task = Task(
                 name=f"Review Tweets for {name}",
                 agent=reviewer_agent,
-                description="Refine tweets for clarity and engagement. Ensure the tweets do not use quotes at the start or end and contain no hashtags.",
-                expected_output="Polished and refined tweets without quotes or hashtags.",
+                description="Refine the 5 tweets for clarity and engagement. Ensure the 5 tweets do not use quotes at the start or end and contain no hashtags.",
+                expected_output="5 polished and refined tweets without quotes or hashtags.",
                 timeout=60
             )
 
@@ -225,22 +229,81 @@ def run_pipeline(folder_path):
 def get_progress():
     global pipeline_status
 
-    # Log the current progress for debugging purposes
-    print(f"Pipeline progress requested: {pipeline_status}")
-
+    # Log the current pipeline progress for debugging
     with pipeline_lock:
-        return jsonify(pipeline_status)
+        current_status = pipeline_status.copy()  # Copy to avoid race conditions when logging
+    print(f"Progress endpoint accessed: {current_status}", flush=True)
 
-# Route: Reset Endpoint
+    # Ensure proper headers to prevent caching
+    response = make_response(jsonify(current_status))
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+
+    return response
+
 @app.route("/reset", methods=["POST"])
 def reset_pipeline():
     global pipeline_status
 
-    with pipeline_lock:
-        pipeline_status = {"status": "Idle", "progress": 0, "details": []}
-    print("Pipeline reset to initial state.")
+    response = {"status": "success", "details": []}
 
-    return jsonify({"message": "Pipeline has been reset."}), 200
+    with pipeline_lock:
+        # Reset pipeline status
+        pipeline_status = {"status": "Idle", "progress": 0, "details": []}
+        response["details"].append("Pipeline status reset.")
+
+    print("Resetting pipeline...")
+
+    # Clean up uploaded and extracted files
+    try:
+        for folder in [UPLOAD_FOLDER, EXTRACTED_FOLDER]:
+            if os.path.exists(folder):
+                print(f"Before cleanup, {folder} contents: {os.listdir(folder)}")
+                shutil.rmtree(folder)  # Remove the folder
+                print(f"{folder} successfully deleted.")
+            os.makedirs(folder, exist_ok=True)  # Recreate the folder
+            print(f"After cleanup, {folder} contents: {os.listdir(folder)}")
+            response["details"].append(f"{folder} cleared and recreated.")
+    except Exception as e:
+        print(f"Error during folder cleanup: {e}")
+        response["status"] = "partial"
+        response["details"].append(f"Error clearing folders: {str(e)}")
+
+    # Clean up output files
+    try:
+        output_file = "output_tweets.csv"
+        if os.path.exists(output_file):
+            os.remove(output_file)  # Delete the output file
+            print(f"Output file '{output_file}' removed.")
+            response["details"].append(f"Output file '{output_file}' removed.")
+        else:
+            response["details"].append("No output file found.")
+    except Exception as e:
+        print(f"Error removing output file: {e}")
+        response["status"] = "partial"
+        response["details"].append(f"Error removing output file: {str(e)}")
+
+    print("Pipeline reset to initial state.")
+    return jsonify(response), 200
+
+@app.route("/health", methods=["GET"])
+def health_check():
+    global pipeline_status
+
+    folder_states = {
+        "upload_folder": os.path.exists(UPLOAD_FOLDER) and not os.listdir(UPLOAD_FOLDER),
+        "extracted_folder": os.path.exists(EXTRACTED_FOLDER) and not os.listdir(EXTRACTED_FOLDER)
+    }
+    file_states = {
+        "output_file": not os.path.exists("output_tweets.csv")
+    }
+    status_state = pipeline_status == {"status": "Idle", "progress": 0, "details": []}
+
+    return jsonify({
+        "folders_clean": folder_states,
+        "files_clean": file_states,
+        "pipeline_status_clean": status_state
+    }), 200
 
 # Route: Download CSV
 @app.route("/download", methods=["GET"])
