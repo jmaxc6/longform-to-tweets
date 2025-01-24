@@ -1,0 +1,97 @@
+When Chat-GPT was released to the public near the end of 2022, the excitement was palpable. Everyone and their mom seemed to be using it for everything from research to brainstorming to problem-solving. But, the use case that arguably got the most fanfare was content creation. 
+Articles
+ claimed that Chat-GPT “enabled content creators to be more creative in their work” and “expanded the possibilities for content creation.” 
+Others
+ argued that Chat-GPT would “help to increase the efficiency and scalability of content creation” by making it possible to “generate a large amount of content in a short period of time.” There was only one problem: the long-form content that Chat-GPT produced was repetitive, regurgitated, tasteless slop. 
+“Honey, come down for dinner - your Chat-GPT content is ready!”
+Almost everyone who spent more than 15 minutes fiddling around with Chat-GPT realized the content it produced was so embarrassingly bad that it was unfit to represent a brand online. However, this did not stop some marketers from opportunistically using AI’s content creation abilities. As stated in my 
+last article
+, in 2023, entrepreneur Jake Ward experimented with using AI to generate 1,800 new articles modeled off competitor’s content. This experiment managed to zip him to the top of Google for 100s keywords. However, there was eventually blowback. Google 
+issued a core update
+ on May 5th, 2024, which cracked down on low-quality, unoriginal content in search results by 40%, and a few months after Jake’s post went viral, his site’s 
+organic traffic decreased by 42%
+.
+Despite this, I do not intend to let the Luddites declare a premature victory over AI. In reality, five primary issues result from using AI for content creation. These issues have workarounds and solutions, making it possible to get all of the benefits of AI content creation without any downsides. In this article, I will dive into the subject to enable you to reap the maximum benefits of AI with your content strategy. 
+First, one quick note: I got some great feedback from one of my readers that they would appreciate a shorter summary of my articles highlighting the most important points. If that is of interest to you, you can skip to that 
+here
+.
+“I’ve been telling you for years, never use AI for content creation!”
+#1 - AI Content Does Not Follow a Clear and Logical Structure
+The first thing you notice when you give Chat-GPT a content prompt and let it run wild is how repetitive the output is. It will dance around a subject, repeat itself over and over, and say 100s of words without really saying anything. Heck, it makes 
+Miss South Carolina
+ sound coherent. Therefore, you must give AI a clear outline to keep it on track. Ironically, AI is one of the best tools to help you create this outline.
+When working with a brand and attempting to determine, “What content piece should we create next?” one of the best things you can do is to determine the most common questions people in your target market have. I am going to give you two different strategies to help determine this:
+Google’s “People also search for” and “Related searches”
+If you are investing in SEO, you will likely have done some keyword research to identify high-volume and low-competition keywords in your niche. While most people get overly fixated on the keywords themselves, stuffing them haphazardly into each piece of content they produce, keywords are only part of the equation. What is equally valuable, if not more so, are the ‘Related searches’ and ‘People also search for’ sections that Google displays on each page (example below). These tell you the most common questions users have about your keywords, clueing you into what topics will offer value to your audience.
+Google’s ‘Related Searches’
+The only difficulty is that you are sure to have a lot of keywords, and it is tedious inputting them one at a time and then manually copying and pasting the ‘Related searches’ into a spreadsheet. A fantastic solution to automate this is the AI web scraper 
+Browse AI
+. They have a pre-built Robot titled 
+“Extract related search keywords by searching on Google,”
+ which does that. You can insert as many keywords as you want at once, and Browse AI will go through all of them and then export all of the ‘Related searches’ into a spreadsheet 
+like this
+.
+Once you have an extensive list of common questions and queries users ask, Chat-GPT can help you structure these into coherent articles. For the client I used in this example, an online private school that serves students in grades 5-12, I gave Chat-GPT the following prompt:
+“I will upload a list of common questions and queries people have about online schooling. Imagine you are a copywriter who will write an article for an online private school designed for students in grades 5-12. Please review the following list of questions and queries and create outlines for three articles. Each article should be well organized around a certain core topic and have 4-6 paragraphs (please share the title for each paragraph). Is this something you can do?”
+Once I uploaded the complete list of queries (column E in the shared 
+spreadsheet
+), three great article outlines were produced, which can be found 
+here
+.
+Get ideas from Q&A forums, online communities, or social media sites
+Q&A forums like Reddit or Quora, online communities such as Skool, and social media sites like Facebook or LinkedIn are great channels to learn about your target audience’s most common questions. You can do a simple search on Reddit or Quora for a specific keyword (e.g. “ai content strategy”) and copy the most common questions related to that keyword into a spreadsheet. If you want something more automated, Browse AI has an excellent 
+robot
+ for Reddit post extraction. If you want to be more targeted, you can join a Facebook group or 
+Skool
+ community likely to have people in your target audience and then copy and paste the list of member questions into a spreadsheet.
+Once done, you can ask Chat-GPT to summarize the user questions in a single sentence and then organize them into categories. These categories provide good raw material for full-fledged articles. I had Chat-GPT summarize a list of questions for a real estate group I am a part of 
+here
+, and I was delighted with the outcome.
+#2 - AI Content Makes Vague or Unsubstantiated Claims
+One of the frustrating but inevitable realities of working with AI for content generation is its tendency to 
+hallucinate
+. Chat-GPT, or other AI chatbots, often make bold and confident claims that misinterpret the actual data. For example, as described in 
+this article
+, an AI content writer stated, “Dialing down the thermostat to between 65 to 68 degrees might be the ticket to enhancing your zzz’s.” However, the recommended temperature is actually 60 to 68 degrees, as stated by another article from WebMD. Other times, AI chatbots will confidently state facts or figures that are impossible to replicate. You can Google until the cows come home, but you cannot find any sources to back up the AI chatbot’s claims because it made them up.
+What is the solution? Give the AI chatbot facts, figures, and sources to work with. I suggest using 
+Perplexity
+ for this. You can ask it for facts and figures about the subject you intend to write about, and it will give you an exhaustive list of sources (example below). If you want something more precise, you can ask Perplexity-pointed questions to get specific facts and figures about individual parts of your article.
+The power of Perplexity
+#3 - 
+AI Content Does Not Speak in Your Brand’s Voice 
+Even if AI can produce objectively high-quality content, if it is inconsistent with the rest of your brand’s content, it will not fly. For that reason, you must train AI to write in your brand's voice. Paid tools like 
+Hoppy Copy
+ or 
+Junia
+ can help you to do this.
+If you want a more affordable option, you can train Chat-GPT or Claude to write in your brand’s style. This is an iterative process that will look slightly different for every brand. But, some best practices are to provide plenty of examples that you believe properly reflect your brand’s voice, give it a chance to create some content, and then provide feedback on where it fell short, after which it will try again. Over time, the models’ content should begin to look more and more like your brand.
+#4 - AI Content 
+Lacks Personal Insights, Stories, and Anecdotes
+Let’s face it: we are humans and not robots. Lengthy, dry, fact-filled articles and presentations with tons of graphs and charts make our eyes glaze over. I was a member of the public speaking club 
+Toastmasters
+ for over four years in San Francisco, and one of the best pieces of advice I got was, “2 minutes of entertainment for every 1 minute of education.” This is not a precise rule; instead, it speaks to the high-level principle that you need to have someone’s attention before you can teach them something new, and entertainment is one of the best ways to do that. Entertainment is so powerful that many content creators have built huge followings purely off their ability to entertain their audience. Joji, a Japanese content creator, became a worldwide phenomenon by jaunting around in a pink suit and doing ridiculous pranks.
+You’ve got our attention
+To create content that truly educates your audience, it is crucial that you also make sure to entertain or inspire them as well. Frankly, there is no shortcut here. I suggest you prepare at least 2-3 personal stories or anecdotes to incorporate into each piece of AI content. This could include data backed up by your own experience (e.g. “After working with 100s of clients, I learned _____”), it could be a personal story (e.g. “When I was eight years old…”), or just something that you find quirky or funny. If you have rough thoughts on what you want to share, you can use AI to organize it or polish it up, but the thoughts should be unique to you and something someone else could not copy. This is the way to do it if you want to stand out from the crowd and not sound robotic.
+#5 - AI Content 
+Makes Grammar, Spelling, and Word Choice Mistakes
+Anyone who has read enough AI content knows it has its own way of communicating, which sounds strange to most readers. As 
+this article
+ points out, AI repeatedly uses specific words and phrases like ‘delve,’ ‘tapestry,’ and ‘In today's [adjective] world of.’ Especially if your team is using different AI chatbots for content creation (e.g. Claude vs. Chat-GPT) or if each member is using different base models (e.g. GPT 4o vs. GPT 3.5), then the words and peculiarities of each piece of content will be slightly different. There are also plenty of times when the first draft the AI spits out will have spelling and grammar mistakes or be poorly put together.
+You don’t want to sound like a robot
+I suggest creating a consistent set of rules and style best practices across your team and ensuring all content goes through that filter. The best solution is 
+Grammarly’s
+ Pro tier, which does precisely that. While Grammarly Pro has a cost ($12 / month), which might not be everyone’s cup of tea, it is still worthwhile having a consistent brand style guide that you use to evaluate all content regardless.
+Grammarly Pro
+Conclusion
+AI offers powerful capabilities that can transform your content strategy but has many issues when left to its own devices. AI content does not follow a clear and logical structure, makes vague or unsubstantiated claims, does not speak in your brand’s voice, lacks personal insights, stories, and anecdotes, and makes grammar, spelling, and word choice mistakes. Thankfully, it is possible to solve for each of these things. You can provide AI with a clear outline to work with, offer it facts and figures to incorporate, run it through a tool to ensure the style is aligned with your brand voice, insert a few personal touches, and then do a robust check for spelling, grammar, and word choice. Through this process, you should be able to create high-quality content in a much faster and more scalable way than ever before.
+TLDR Summary
+AI Content Lacks Structure:
+ AI-generated content is often repetitive and unclear. Solution: Create a detailed outline before generating long-form content.
+Unsubstantiated Claims:
+ AI can produce false or unverifiable information. Solution: Provide verified facts with sources using tools like Perplexity.
+Inconsistent Brand Voice:
+ AI struggles to match a brand’s tone. Solution: Train AI tools using brand-specific content examples.
+Lacks Personalization:
+ AI-generated content lacks personal stories or insights. Solution: To engage readers, incorporate 2-3 human anecdotes or stories.
+Grammar & Word Choice Issues:
+ AI makes stylistic mistakes. Solution: Use tools like Grammarly Pro to maintain consistency.

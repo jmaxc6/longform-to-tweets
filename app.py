@@ -11,9 +11,27 @@ from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template, send_file
 from werkzeug.utils import secure_filename
+from supabase import create_client
+import uuid  # For generating unique session IDs
+# import logging
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# Initialize Supabase client with error handling
+supabase_url = os.getenv("SUPABASE_URL")
+supabase_key = os.getenv("SUPABASE_KEY")
+
+# Configure logging
+# logging.basicConfig(level=logging.DEBUG)  # Configure logging level
+
+if not supabase_url or not supabase_key:
+    raise ValueError("Supabase URL or Key is missing. Please check your .env file.")
+
+supabase = create_client(supabase_url, supabase_key)
+
+if supabase is None:
+    raise RuntimeError("Failed to initialize Supabase client.")
 
 # Load environment variables
 load_dotenv()
@@ -61,6 +79,38 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def log_error(message):
+    print(f"[ERROR] {message}", flush=True)
+
+def create_pipeline_session(session_id):
+    supabase.table("pipeline_status").insert({
+        "session_id": session_id,
+        "status": "Running",
+        "progress": 0,
+        "details": [],
+        "error_message": None,
+        "output_file_url": None
+    }).execute()
+
+def update_pipeline_status(session_id, status=None, progress=None, details=None, error_message=None, output_file_url=None):
+    update_data = {}
+    if status is not None:
+        update_data["status"] = status
+    if progress is not None:
+        update_data["progress"] = progress
+    if details is not None:
+        update_data["details"] = details
+    if error_message is not None:
+        update_data["error_message"] = error_message
+    if output_file_url is not None:
+        update_data["output_file_url"] = output_file_url
+
+    supabase.table("pipeline_status").update(update_data).eq("session_id", session_id).execute()
+
+def fetch_pipeline_status(session_id):
+    response = supabase.table("pipeline_status").select("*").eq("session_id", session_id).execute()
+    return response.data[0] if response.data else None
+
 # Utility function to load Substack articles
 def load_substack_articles(folder_path):
     articles = []
@@ -87,8 +137,7 @@ def home():
 # Route: Upload ZIP file and start processing in background
 @app.route("/upload", methods=["POST"])
 def upload_folder():
-    global pipeline_status
-
+    print('this print statement is working and getting logged!');
     if 'file' not in request.files:
         return jsonify({'error': 'No file part provided in the request'}), 400
 
@@ -101,24 +150,22 @@ def upload_folder():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
-        # Set pipeline status to running immediately
-        with pipeline_lock:
-            pipeline_status = {"status": "Running", "progress": 0, "details": []}
-        print(f"Pipeline status set to running: {pipeline_status}")
+        # Generate a unique session_id
+        session_id = str(uuid.uuid4())
+
+        # Create a new pipeline session in the database
+        create_pipeline_session(session_id)
+        print('this print statement is also working and getting logged!')
 
         # Start processing in a background thread
-        thread = Thread(target=process_file, args=(filepath,))
+        thread = Thread(target=process_file, args=(filepath, session_id))
         thread.start()
 
-        # Respond to the client immediately
-        return jsonify({"message": "File uploaded successfully. Processing started."}), 200
+        return jsonify({"message": "File uploaded successfully. Processing started.", "session_id": session_id}), 200
 
     return jsonify({'error': 'Invalid file format, only ZIP files are allowed'}), 400
 
-def process_file(filepath):
-    """
-    Extracts and processes the uploaded file in the background.
-    """
+def process_file(filepath, session_id):
     extract_path = os.path.join(app.config['UPLOAD_FOLDER'], "extracted")
     os.makedirs(extract_path, exist_ok=True)
 
@@ -126,129 +173,207 @@ def process_file(filepath):
         with zipfile.ZipFile(filepath, 'r') as zip_ref:
             zip_ref.extractall(extract_path)
     except zipfile.BadZipFile:
-        with pipeline_lock:
-            pipeline_status["status"] = "Error: Invalid ZIP file"
+        update_pipeline_status(session_id, status="Error", error_message="Invalid ZIP file")
         return
 
-    # Process the extracted files
-    folder_path = extract_path
-    run_pipeline(folder_path)
+    try:
+        # Process the extracted files
+        folder_path = extract_path
+        run_pipeline(folder_path, session_id)
+    except Exception as e:
+        update_pipeline_status(session_id, status="Error", error_message=str(e))
 
-# Pipeline logic
-def run_pipeline(folder_path):
-    global pipeline_status
+def upload_to_supabase(file_path, session_id):
+    print("Starting upload to Supabase...")
+    print(f"File path: {file_path}, Session ID: {session_id}", flush=True)
+    
+    try:
+        # Upload the file to the Supabase storage bucket
+        with open(file_path, "rb") as file:
+            response = supabase.storage.from_("Zip uploads").upload(f"{session_id}.csv", file)
 
-    output_csv = "output_tweets.csv"
+        # Debugging: Check response type and content
+        print(f"Upload Response: {response}", flush=True)
+
+        if not response or hasattr(response, "error"):
+            raise RuntimeError(f"File upload failed: {getattr(response, 'error', 'Unknown error')}")
+
+        # Generate a signed URL
+        signed_url_response = supabase.storage.from_("Zip uploads").create_signed_url(f"{session_id}.csv", expires_in=3600)
+
+        # Debugging: Check signed URL response
+        print(f"Signed URL Response: {signed_url_response}", flush=True)
+
+        if not signed_url_response or not signed_url_response.get("signed_url"):
+            raise RuntimeError("Signed URL generation failed or returned None.")
+
+        # Return the signed URL
+        return signed_url_response["signed_url"]
+    except Exception as e:
+        print(f"Error during upload to Supabase: {str(e)}", flush=True)
+        raise RuntimeError(f"Failed to upload file to Supabase for session {session_id}: {str(e)}")
+
+def run_pipeline(folder_path, session_id):
+    output_csv = f"{session_id}.csv"  # Unique file name based on session_id
     print(f"Starting pipeline with folder_path: {folder_path}, output_csv: {output_csv}", flush=True)
 
     # Validate folder path
     if not os.path.exists(folder_path):
-        with pipeline_lock:
-            pipeline_status = {"status": f"Folder '{folder_path}' does not exist.", "progress": 0}
+        update_pipeline_status(session_id, status="Error", error_message=f"Folder '{folder_path}' does not exist.")
         return
 
     # Load articles and filenames
     file_names, articles = load_substack_articles(folder_path)
     if not articles:
-        with pipeline_lock:
-            pipeline_status = {"status": "No articles found in the specified folder.", "progress": 0}
+        update_pipeline_status(session_id, status="Error", error_message="No articles found in the specified folder.")
         return
 
-    with pipeline_lock:
-        pipeline_status = {"status": "Running", "progress": 0, "details": []}
+    update_pipeline_status(session_id, status="Running", progress=0, details=[])
 
     final_results = []
 
     for idx, (name, article) in enumerate(zip(file_names, articles)):
-        with pipeline_lock:
-            pipeline_status["progress"] = int(((idx + 1) / len(articles)) * 100)
-            pipeline_status["status"] = f"Article {idx + 1} Completed"
-            pipeline_status["details"].append(f"Article {idx + 1} Completed")
-        print(f"Updated pipeline status: {pipeline_status}")
+        progress = int(((idx + 1) / len(articles)) * 100)
+        update_pipeline_status(
+            session_id,
+            progress=progress,
+            status=f"Processing Article {idx + 1} of {len(articles)}",
+            details=[f"Article {idx + 1} Completed"]
+        )
 
         try:
-            # Define and execute tasks
-            analyze_task = Task(
-                name=f"Analyze {name}",
-                agent=analyzer_agent,
-                description=f"Summarize and analyze the following article:\n\n{article}",
-                expected_output="A summary and key themes for tweet generation.",
-                timeout=60
-            )
-            generate_tweet_task = Task(
-                name=f"Generate Tweets for {name}",
-                agent=tweet_generator_agent,
-                description="Generate 5 engaging tweets based on the analysis. Avoid using quotes at the beginning or end and do not include hashtags.",
-                expected_output="5 engaging and creative tweets without quotes or hashtags.",
-                timeout=60
-            )
-            review_task = Task(
-                name=f"Review Tweets for {name}",
-                agent=reviewer_agent,
-                description="Refine tweets for clarity and engagement. Ensure the tweets do not use quotes at the start or end and contain no hashtags.",
-                expected_output="Polished and refined tweets without quotes or hashtags.",
-                timeout=60
-            )
-
             # Run tasks sequentially
-            crew = Crew(
-                agents=[analyzer_agent, tweet_generator_agent, reviewer_agent],
-                tasks=[analyze_task, generate_tweet_task, review_task]
-            )
+            analyze_task = Task(name=f"Analyze {name}", agent=analyzer_agent, description=f"Summarize the following article and extract tweetable points:\n\n{article}", expected_output="A concise summary and key themes for tweet generation.", timeout=60)
+            generate_tweet_task = Task(name=f"Generate Tweets for {name}", agent=tweet_generator_agent, description=("Based on the article summary, generate a list of 5 engaging tweets. "
+                    "Each tweet must be at least 2 sentences long and avoid using any hashtags (#). "
+                    "Do not number the tweets or include bullet points. Output each tweet as plain text."), expected_output="A plain text list of 5 well-crafted tweets, each at least 2 sentences long.", timeout=60)
+            review_task = Task(name=f"Review Tweets for {name}", agent=reviewer_agent, description=("Refine the generated tweets for clarity and engagement. "
+                    "Each tweet must be at least 2 sentences long and avoid using any hashtags (#)."), expected_output="A refined and polished list of tweets.", timeout=60)
+
+            crew = Crew(agents=[analyzer_agent, tweet_generator_agent, reviewer_agent], tasks=[analyze_task, generate_tweet_task, review_task])
             result = crew.kickoff()
 
-            # Extract results
             output_text = result.content if hasattr(result, 'content') else str(result)
             cleaned_tweets = [clean_text(tweet) for tweet in output_text.split("\n") if tweet.strip()]
             final_results.append((name, cleaned_tweets))
-
+            print("Successfully processed article:", name)
         except Exception as e:
-            with pipeline_lock:
-                pipeline_status = {"status": f"Error processing {name}: {str(e)}"}
+            update_pipeline_status(session_id, status="Error", error_message=f"Error processing article {name}: {str(e)}")
             return
 
     # Save results to CSV
-    with open(output_csv, mode='w', newline='', encoding='utf-8') as csv_file:
-        writer = csv.writer(csv_file)
-        writer.writerow(["Original Article Name", "Final Tweet"])
-        for name, tweets in final_results:
-            for tweet in tweets:
-                writer.writerow([name, tweet])
+    try:
+        print("Writing results to CSV...")
+        with open(output_csv, mode='w', newline='', encoding='utf-8') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(["Original Article Name", "Final Tweet"])
+            for name, tweets in final_results:
+                for tweet in tweets:
+                    writer.writerow([name, tweet])
+        print("CSV file written successfully:", output_csv)
 
-    # Update pipeline status to finished
-    with pipeline_lock:
-        pipeline_status = {"status": "Pipeline Finished", "progress": 100, "details": ["Pipeline Finished"]}
-    print(f"Pipeline finished: {pipeline_status}")
+        # Upload the CSV to Supabase storage
+        try:
+            with open(output_csv, "rb") as file:
+                response = supabase.storage.from_("Zip uploads").upload(output_csv, file)
+            
+            print(f"Upload response: {response}")  # Debugging output
+
+            # Check for upload error
+            if isinstance(response, dict) and "error" in response:
+                raise Exception(f"Error uploading file to Supabase: {response['error']}")
+
+            # Generate a signed URL
+            signed_url_response = supabase.storage.from_("Zip uploads").create_signed_url(output_csv, expires_in=3600)
+            print(f"Signed URL response: {signed_url_response}")  # Debugging output
+
+            # Check for signed URL error
+            if isinstance(signed_url_response, dict) and "error" in signed_url_response:
+                raise Exception(f"Error generating signed URL: {signed_url_response['error']}")
+
+            signed_url = signed_url_response.get("signedURL", None)
+            if not signed_url:
+                raise Exception("Signed URL generation failed or returned None.")
+
+            print("Signed URL generated successfully:", signed_url)
+
+            update_pipeline_status(
+                session_id,
+                status="Pipeline Finished",
+                progress=100,
+                details=["Pipeline Finished"],
+                output_file_url=signed_url
+            )
+            print("Pipeline status updated successfully with signed URL.")
+        except Exception as e:
+            update_pipeline_status(session_id, status="Error", error_message=f"Failed to upload results: {str(e)}")
+    except Exception as e:
+        update_pipeline_status(session_id, status="Error", error_message=f"Failed to save results: {str(e)}")
+    finally:
+        # Clean up the local file after upload
+        try:
+            if os.path.exists(output_csv):
+                os.remove(output_csv)
+                print(f"Temporary file {output_csv} removed successfully.")
+        except Exception as e:
+            log_error(f"Failed to clean up temporary file {output_csv}: {str(e)}")
 
 # Route: Progress Endpoint
 @app.route("/progress", methods=["GET"])
 def get_progress():
-    global pipeline_status
+    session_id = request.args.get("session_id")
+    if not session_id:
+        return jsonify({"error": "Session ID is required"}), 400
 
-    # Log the current progress for debugging purposes
-    print(f"Pipeline progress requested: {pipeline_status}")
+    status = fetch_pipeline_status(session_id)
+    if not status:
+        return jsonify({"error": "Session not found"}), 404
 
-    with pipeline_lock:
-        return jsonify(pipeline_status)
+    return jsonify(status)
 
 # Route: Reset Endpoint
 @app.route("/reset", methods=["POST"])
 def reset_pipeline():
-    global pipeline_status
+    session_id = request.json.get("session_id")
+    if not session_id or not isinstance(session_id, str):
+        return jsonify({"error": "Valid Session ID is required"}), 400
 
-    with pipeline_lock:
-        pipeline_status = {"status": "Idle", "progress": 0, "details": []}
-    print("Pipeline reset to initial state.")
+    # Reset the session in the database
+    update_pipeline_status(session_id, status="Idle", progress=0, details=[], error_message=None, output_file_url=None)
 
+    print(f"Pipeline for session {session_id} reset to initial state.")
     return jsonify({"message": "Pipeline has been reset."}), 200
+
+def fetch_file_url(session_id):
+    # Retrieve the file URL from Supabase database
+    response = supabase.table("pipeline_status").select("output_file_url").eq("session_id", session_id).execute()
+    
+    if response.data and response.data[0].get("output_file_url"):
+        file_url = response.data[0]["output_file_url"]
+        return file_url
+    else:
+        return None
 
 # Route: Download CSV
 @app.route("/download", methods=["GET"])
 def download_csv():
-    file_path = "output_tweets.csv"
-    if not os.path.exists(file_path):
-        return jsonify({"error": "Output file not found. Please run the pipeline first."}), 400
-    return send_file(file_path, as_attachment=True)
+    session_id = request.args.get("session_id")
+    if not session_id:
+        return jsonify({"error": "Session ID is required"}), 400
+
+    # Fetch the pipeline status to get the signed URL
+    status = fetch_pipeline_status(session_id)
+    if not status:
+        return jsonify({"error": "Session not found"}), 404
+
+    print(f"the value of status is:' {status}")
+    signed_url = status.get("output_file_url")
+    print(f"Signed URL retrieved: {signed_url}")
+    if not signed_url:
+        return jsonify({"error": "Output file not available. The pipeline might still be running or failed."}), 400
+
+    # Redirect the user to the signed URL
+    return jsonify({"file_url": signed_url})
 
 if __name__ == "__main__":
     print("Starting Flask app...", flush=True)
