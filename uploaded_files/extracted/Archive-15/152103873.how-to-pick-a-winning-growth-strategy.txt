@@ -1,0 +1,205 @@
+In today’s fast-paced and competitive business landscape, consistent growth is a necessity. With countless strategies available, deciding how to scale your business can feel daunting. Should you dive into paid advertising to drive instant purchases, invest in search engine optimization (SEO) for long-term organic traffic, harness the power of social media to engage your audience, implement sales automation to connect with prospects 1-on-1, or leverage influencer partnerships to expand your reach? Choosing a strategy that fits your goals, resources, and audience is critical.
+Trying to select a growth strategy for your business
+Note:
+ This article is tailored for B2B and B2C startups. You will find some value here if you run a service or e-commerce business, but other resources might suit you better. Short on time? Check out the summary 
+here
+.
+#1 - Getting your first ten customers
+Company stage matters, and the growth (i.e. sales and marketing) strategies to acquire one’s first ten customers differ from those employed at later stages. If you are a B2B business, the best approach involves promoting your product to your network, asking for referrals, posting in online communities, and attending relevant networking events, as 
+this article
+ highlights.
+Credit: Lenny’s Newsletter
+If you are a B2C business, all of the above still works well, but I suggest two additional strategies. First, go where your target audience hangs out, whether online or offline. This might involve identifying relevant sub-Reddits or X.com circles or finding local clubs or events your target audience will likely attend. Second, post physical placements such as flyers, stickers, and signs at these offline locations. 
+If you have not yet acquired your first ten customers, this is not the time to think of systems, scalability, and predictable revenue, but rather to “
+Do things that don’t scale
+,” as YC founder and startup expert Paul Graham advises.
+This actually works better than you’d expect
+#2 - The time vs. money matrix
+Once you have acquired at least ten customers, the next step is assessing the time vs. money matrix (below). When referring to time and money in this context, I am referring specifically to the time and money that a team is willing to commit to growth efforts. If a team has millions in cash but has a cap of $1k/month for growth efforts, that is “low money.” Similarly, if a team has tons of time but is tied up in priorities outside of growth, that is “low time.” 
+The time vs. money matrix
+This step is important because time or money can be serious limiting factors that may rule out certain growth strategies. If you want to outcompete your competitors on paid ads but do not have the budget earmarked for it, you are not going to get much traction. If you want to outshine competitors by writing handwritten notes to prospective customers but do not have the time, you are better off finding an alternative strategy.
+What is a reasonable benchmark for “high time” and “high money”? Based on my experience, some decent benchmarks are as follows:
+Money
+High = $25k+/month
+Medium = $10k+/month
+Low = < $3k/month
+Time
+High = 20 hours per week
+Medium = 10 hours per week
+Low = < 3 hours per week
+If you want to succeed with your growth efforts, you must be at least ‘Medium’ on one of these. Being ‘Medium’ on money lets you pay for software or hire talent to handle much of the work. Being ‘Medium’ on time enables you to compensate for lack of funds through hustle and effort.
+If you are not at least ‘Medium’ on one of the dimensions, you need to either increase money (e.g. by doing a fundraise) or increase time (e.g. hiring someone or re-prioritizing). While many startup founders feel overwhelmed and out of their depth when leading growth efforts, handling it internally is necessary if you lack the money to outsource it.
+#3 - Research the competition 
+Now that you have acquired your first ten customers and are at least a ‘Medium’ on either time or money, the next step is to start researching your competitor’s growth strategies. I would suggest picking at least five close competitors in your niche, ideally all of whom are a few steps ahead of you (but not too far ahead; a billion-dollar company’s strategies are not easily replicable).
+Learning from the best 
+Why focus so much on the competition? Because choosing a strong growth strategy involves a huge number of factors: your niche, target audience, price point, company resources, etc. Trying to reinvent the wheel and operate entirely from first principles is highly likely to lead you astray, but by benchmarking against your best competitors, you can ensure that your game plan is battle-tested.
+Thankfully, there are a plethora of tools out there to help you learn about your competitor’s growth strategies:
+Paid Ads
+-The 
+Google Ads Transparency Center
+ will show you what ads your competitors are running for Search Ads and YouTube Ads and what landing pages their ads are going to.
+-The 
+Facebook Ads Library
+ will show you what ads your competitors are running on Facebook and Instagram Ads and what landing pages their ads are going to.
+-The 
+LinkedIn Ads Library
+ will show you what ads your competitors are running for LinkedIn Ads and what landing pages their ads are going to.
+-The 
+TikTok Ads Library
+ will show you what ads your competitors are running for TikTok Ads and what landing pages their ads are going to.
+-
+SEMRush
+ or 
+Ahrefs
+ will tell you what Google Ads keywords your competitors are bidding against and how much they pay for each keyword.
+Facebook’s Ad Library
+SEO
+SEMRush
+ or 
+Ahrefs
+ will tell you the following:
+-What organic search keywords are your competitors ranking for along with their positions.
+-What backlinks do your competitors have, along with the domain rank of those backlinks.
+-What content occupies the top positions for various keyword searches, how many backlinks does each piece have, and how hard would it be to compete against them?
+Sample data from Ahrefs (with client data blurred out)
+Social Media
+-You can learn much about competitor’s social media marketing strategies simply by searching for their pages on all major platforms. Some good sites include Facebook, Instagram, X.com (Twitter), LinkedIn, and TikTok.
+-You can utilize social intelligence tools such as 
+Hootsuite
+ or 
+Sprout Social
+ for a more high-tech solution.
+Sales Automation (i.e., Cold Email Outreach + Cold Social Media Messaging)
+Sales automation is cold email outreach or automated social media outreach (e.g. getting a brand message in your LinkedIn inbox). Your competitor’s sales automation efforts are tricky to track, but I would suggest using 
+Clay’s
+ “Tech Stack” enrichment. This will tell you all the tools your competitors are using, and you can look for the presence of sales automation tools like 
+Apollo
+, 
+Lemlist
+, 
+HeyReach
+, 
+Instantly
+, or 
+Phantombuster
+.
+Clay’s Tech Stack Enrichment
+Influencer Marketing
+-By scanning through your competitor’s Instagram or TikTok accounts, you should be able to assess whether they are engaging in any influencer marketing campaigns.
+-
+For a more high-tech solution, companies like 
+Meltwater
+ or 
+Sprout Social
+ have more robust reporting, enabling you to see in-depth reporting on your competitor’s influencer marketing campaigns.
+In addition to the above, I would do some research on the AI search engine 
+Perplexity
+, using queries like, “What were the top growth strategies for [Company]?” Doing research using the various tools above and then supplementing it with Perplexity should help you assess your competitor’s most common growth strategies.
+Considerations When Copying Competitors
+It is worth stating that just because your competitors utilize specific growth strategies does not mean they are the best fit for your business, for a few reasons. First, your competitors may be optimizing for different things. For example, you may be seeking to maximize profit while they are pursuing revenue growth at all costs, even if it is unprofitable in the short term. Second, compared to your competitors, you may have vastly different resources.
+Third, your competitors may have an appetite for legally questionable tactics or strategies you are unwilling to stomach. Having lived in San Francisco for 6 years and seen the inside operations of many startups, I have learned that most successful early-to-mid-stage startups look at almost all decisions purely through the lens of risk vs. reward. Nothing is off-limits, and if you told the founder, “You could get sued for this”, you will be told something like, “Settling the lawsuit is worth it given how profitable this is”. You may need a different approach if you do not have the same risk appetite.
+Don’t let your competitors drag you down with them
+#4 - Picking a Winning Growth Strategy
+Now that we have analyzed competitors’ growth strategies and have an understanding of which are the most popular and worth imitating, the final step is to go through two final checklists to determine if either paid ads or SEO are a potentially poor fit:
+Paid Ads:
+While the fully fleshed-out checklist can be found in 
+this article
+, which is the best place to go for clarification on any of these points, I will still re-print the key points below:
+#1 - Are you in a sensitive industry (e.g., adult content, gambling, pharmaceuticals)?
+#2 - Is your product or service sufficiently high price or high-margin?
+#3 - Do you have sufficient budget?
+#4 - Are you able to handle uncertainty and make calculated bets?
+#5 - Are your desired customers easy to find online?
+Especially if you are a firm no for any of #2 - #5, there are better fits for your brand than paid ads.
+Some industries are much better for paid ads than others
+SEO:
+While there are some other SEO research tools out there (e.g. 
+Moz
+ and 
+Ubersuggest
+), I would highly recommend paying for either 
+Ahrefs
+ or 
+SEMRush
+ for your SEO research and ongoing management:
+#1 - When using either SEMRush or Ahrefs and searching for niche-relevant keywords, is there at least 10,000 cumulative search volume for keywords with keyword difficulty (KD) under 30?
+#2 - Are you willing to wait at least 6 months to start seeing a solid boost in traffic from SEO?
+#3 - Are you willing to wait at least 12 months to start seeing consistent purchases driven by SEO?
+While results can and do happen faster, these are reasonable benchmarks for what you should expect to wait if you are serious about SEO.
+Conclusion
+After reading this article, I hope you now have a much clearer idea of how to pick a winning growth strategy for your business. The path to scaling your business is never one-size-fits-all, but with the right mindset and tools, you can craft a strategy that propels your business forward. Now is the time to take the first step, make bold decisions, and set your growth engine in motion. The future of your business depends on it.
+If you liked this content, please click the <3 button on Substack so I know which content to double down on.
+TLDR Summary
+This article provides a structured approach to selecting the best growth strategy for B2B and B2C startups. It covers customer acquisition, assessing resources, researching competitors, and finally, choosing a growth strategy.
+Key Lessons and Strategies:
+Getting Your First Ten Customers
+For B2B Startups
+:
+Leverage personal networks, ask for referrals, engage in online communities, and attend networking events.
+For B2C Startups
+:
+Target your audience where they gather (both online and offline).
+Utilize physical placements like flyers, stickers, and signage to connect locally.
+Key Insight
+: At this stage, prioritize personalized, unscalable methods to secure initial customers.
+The Time vs. Money Matrix
+Assessment
+: Determine how much time and money your team can dedicate to growth efforts.
+Benchmarks
+:
+High Money
+: $25k+/month; 
+Medium Money
+: $10k+/month; 
+Low Money
+: <$3k/month.
+High Time
+: 20+ hours/week; 
+Medium Time
+: 10+ hours/week; 
+Low Time
+: <3 hours/week.
+Actionable Insight
+: If you’re not at least "Medium" on either time or money, increase resources or reprioritize efforts to focus on growth.
+Research the Competition
+Why Research Matters
+: Benchmarking against competitors saves time and ensures strategies are battle-tested.
+Tools for Research
+:
+Paid Ads
+:
+Use platforms like Google Ads Transparency Center, Facebook Ads Library, and SEMRush to analyze competitors' ads, keywords, and landing pages.
+SEO
+:
+SEMRush and Ahrefs help uncover keyword rankings, backlinks, and content strategies.
+Social Media
+:
+Review competitors’ social platforms or use tools like Hootsuite or Sprout Social for insights.
+Sales Automation
+:
+Tools like Clay’s Tech Stack enrichment reveal competitors’ sales automation tools.
+Influencer Marketing
+:
+Monitor competitor activity on Instagram or TikTok, or use Meltwater for robust analysis.
+Caution
+: Consider your unique goals and risk appetite before copying competitors outright.
+Picking a Winning Growth Strategy
+Make a final determination on which growth strategy to pursue through your assessment of what has worked well for competitors. Before committing, review checklists for paid ads and SEO to determine if they are potentially a poor fit.
+Evaluate Fit for Paid Ads
+:
+Assess if your industry, product margins, budget, and target audience align with paid advertising. Avoid this channel if operating in sensitive industries or lacking sufficient budget.
+Evaluate Fit for SEO
+:
+Use tools like SEMRush or Ahrefs to evaluate keyword difficulty and search volume in your niche.
+Be prepared to wait 6-12 months for meaningful results.
+Key Insight
+: The best strategy depends on your resources, niche, and ability to wait for long-term gains.
+Key Takeaways:
+Start Small and Unscalable
+: For early customer acquisition, prioritize personalized and hands-on approaches.
+Understand Your Resources
+: Assess your time and money availability before committing to a strategy.
+Benchmark Against Competitors
+: Use competitor insights as a guide, but adapt strategies to fit your unique context.
+Match Strategy to Goals
+: Paid ads are ideal for quick results with sufficient budget, while SEO works best for patient teams investing in long-term growth.

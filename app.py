@@ -13,7 +13,9 @@ from flask import Flask, request, jsonify, render_template, send_file
 from werkzeug.utils import secure_filename
 from supabase import create_client
 import uuid  # For generating unique session IDs
-# import logging
+import io
+import requests
+from datetime import datetime, timezone
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -21,9 +23,6 @@ app = Flask(__name__)
 # Initialize Supabase client with error handling
 supabase_url = os.getenv("SUPABASE_URL")
 supabase_key = os.getenv("SUPABASE_KEY")
-
-# Configure logging
-# logging.basicConfig(level=logging.DEBUG)  # Configure logging level
 
 if not supabase_url or not supabase_key:
     raise ValueError("Supabase URL or Key is missing. Please check your .env file.")
@@ -80,19 +79,9 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def log_error(message):
-    print(f"[ERROR] {message}", flush=True)
+    print(f"[ERROR] {message}", flush=True)    
 
-def create_pipeline_session(session_id):
-    supabase.table("pipeline_status").insert({
-        "session_id": session_id,
-        "status": "Running",
-        "progress": 0,
-        "details": [],
-        "error_message": None,
-        "output_file_url": None
-    }).execute()
-
-def update_pipeline_status(session_id, status=None, progress=None, details=None, error_message=None, output_file_url=None):
+def update_pipeline_status(session_id, status=None, progress=None, details=None, error_message=None, output_file_url=None, reset_at=None, archived=None):
     update_data = {}
     if status is not None:
         update_data["status"] = status
@@ -104,11 +93,24 @@ def update_pipeline_status(session_id, status=None, progress=None, details=None,
         update_data["error_message"] = error_message
     if output_file_url is not None:
         update_data["output_file_url"] = output_file_url
+    if reset_at is not None:
+        update_data["reset_at"] = reset_at
+    if archived is not None:
+        update_data["archived"] = archived
 
     supabase.table("pipeline_status").update(update_data).eq("session_id", session_id).execute()
 
+# def get_current_session_id():
+#     """
+#     Retrieves the most recent session_id from the database.
+#     """
+#     response = supabase.table("pipeline_status").select("session_id").order("created_at", desc=True).limit(1).execute()
+#     if response.data and response.data[0].get("session_id"):
+#         return response.data[0]["session_id"]
+#     return None
+
 def fetch_pipeline_status(session_id):
-    response = supabase.table("pipeline_status").select("*").eq("session_id", session_id).execute()
+    response = supabase.table("pipeline_status").select("*").eq("session_id", session_id).eq("archived", False).execute()
     return response.data[0] if response.data else None
 
 # Utility function to load Substack articles
@@ -129,6 +131,22 @@ def clean_text(text):
     clean = re.sub(r"\s+", " ", clean)  # Collapse multiple spaces into one
     return clean.strip()  # Remove leading and trailing spaces
 
+def create_pipeline_session(session_id):
+    """
+    Inserts a new session into the database using the given session_id.
+    """
+    created_at = datetime.now(timezone.utc).isoformat()  # Get current UTC time
+    supabase.table("pipeline_status").insert({
+        "session_id": session_id,
+        "status": "Running",
+        "progress": 0,
+        "details": [],
+        "error_message": None,
+        "output_file_url": None,
+        "created_at": created_at,
+        "archived": False
+    }).execute()
+
 # Route: Home - Serve the GUI
 @app.route("/", methods=["GET"])
 def home():
@@ -137,7 +155,7 @@ def home():
 # Route: Upload ZIP file and start processing in background
 @app.route("/upload", methods=["POST"])
 def upload_folder():
-    print('this print statement is working and getting logged!');
+    # Check for file in the request
     if 'file' not in request.files:
         return jsonify({'error': 'No file part provided in the request'}), 400
 
@@ -146,21 +164,22 @@ def upload_folder():
         return jsonify({'error': 'No selected file for upload'}), 400
 
     if file and allowed_file(file.filename):
+        # Save the uploaded file
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
-        # Generate a unique session_id
+        # Generate a unique session ID
         session_id = str(uuid.uuid4())
 
         # Create a new pipeline session in the database
         create_pipeline_session(session_id)
-        print('this print statement is also working and getting logged!')
 
         # Start processing in a background thread
         thread = Thread(target=process_file, args=(filepath, session_id))
         thread.start()
 
+        # Return the session_id to the front-end
         return jsonify({"message": "File uploaded successfully. Processing started.", "session_id": session_id}), 200
 
     return jsonify({'error': 'Invalid file format, only ZIP files are allowed'}), 400
@@ -331,30 +350,6 @@ def get_progress():
 
     return jsonify(status)
 
-# Route: Reset Endpoint
-@app.route("/reset", methods=["POST"])
-def reset_pipeline():
-    session_id = request.json.get("session_id")
-    if not session_id or not isinstance(session_id, str):
-        return jsonify({"error": "Valid Session ID is required"}), 400
-
-    # Reset the session in the database
-    update_pipeline_status(session_id, status="Idle", progress=0, details=[], error_message=None, output_file_url=None)
-
-    print(f"Pipeline for session {session_id} reset to initial state.")
-    return jsonify({"message": "Pipeline has been reset."}), 200
-
-def fetch_file_url(session_id):
-    # Retrieve the file URL from Supabase database
-    response = supabase.table("pipeline_status").select("output_file_url").eq("session_id", session_id).execute()
-    
-    if response.data and response.data[0].get("output_file_url"):
-        file_url = response.data[0]["output_file_url"]
-        return file_url
-    else:
-        return None
-
-# Route: Download CSV
 @app.route("/download", methods=["GET"])
 def download_csv():
     session_id = request.args.get("session_id")
@@ -366,14 +361,58 @@ def download_csv():
     if not status:
         return jsonify({"error": "Session not found"}), 404
 
-    print(f"the value of status is:' {status}")
     signed_url = status.get("output_file_url")
-    print(f"Signed URL retrieved: {signed_url}")
     if not signed_url:
         return jsonify({"error": "Output file not available. The pipeline might still be running or failed."}), 400
 
-    # Redirect the user to the signed URL
-    return jsonify({"file_url": signed_url})
+    try:
+        # Fetch the file from the signed URL
+        response = requests.get(signed_url)
+        if response.status_code != 200:
+            return jsonify({"error": "Failed to fetch the file from the signed URL."}), 400
+
+        # Serve the CSV file directly
+        return send_file(
+            io.BytesIO(response.content),
+            mimetype="text/csv",
+            as_attachment=True,
+            download_name=f"{session_id}.csv",
+        )
+    except Exception as e:
+        return jsonify({"error": f"Failed to process download: {str(e)}"}), 500
+
+# Route: Reset Endpoint
+
+@app.route("/reset", methods=["POST"])
+def reset_pipeline():
+    session_id = request.json.get("session_id")
+    if not session_id:
+        return jsonify({"error": "Valid Session ID is required"}), 400
+
+    reset_at = datetime.now(timezone.utc).isoformat()
+
+    # Archive the old session
+    supabase.table("pipeline_status").update({
+        "status": "Archived",
+        "archived": True,
+        "reset_at": reset_at
+    }).eq("session_id", session_id).execute()
+
+    # (Optional) Create a new session
+    new_session_id = str(uuid.uuid4())
+    created_at = datetime.now(timezone.utc).isoformat()  # Convert datetime to ISO 8601 string
+    supabase.table("pipeline_status").insert({
+        "session_id": new_session_id,
+        "status": "Idle",
+        "progress": 0,
+        "details": [],
+        "error_message": None,
+        "output_file_url": None,
+        "created_at": created_at,
+        "archived": False
+    }).execute()
+
+    return jsonify({"message": "Pipeline has been reset.", "new_session_id": new_session_id}), 200
 
 if __name__ == "__main__":
     print("Starting Flask app...", flush=True)
