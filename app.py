@@ -434,14 +434,25 @@ def download_csv():
 @app.route("/reset", methods=["POST"])
 def reset_pipeline():
     try:
-        # Mark all running sessions as archived
-        supabase.table("pipeline_status").update({"archived": True}).eq("status", "Running").execute()
+        # Archive all non-archived sessions
+        supabase.table("pipeline_status").update({"archived": True}).neq("archived", True).execute()
 
         # Clean up uploaded files from Supabase
-        storage_response = supabase.storage.from_("Input Folder").list("")
+        bucket_name = "Input Folder"
+        storage_response = supabase.storage.from_(bucket_name).list("")
         if storage_response and isinstance(storage_response, list):
             for file in storage_response:
-                supabase.storage.from_("Input Folder").remove([file["name"]])
+                try:
+                    supabase.storage.from_(bucket_name).remove([file["name"]])
+                    print(f"Deleted file: {file['name']}", flush=True)
+                except Exception as e:
+                    print(f"Failed to delete file: {file['name']}, Error: {str(e)}", flush=True)
+
+        # Clean up temporary local files/directories
+        temp_dir = "temporary_extracted_files"
+        if os.path.exists(temp_dir):
+            shutil.rmtree(temp_dir, ignore_errors=True)
+            print(f"Deleted temporary directory: {temp_dir}", flush=True)
 
         print("Pipeline reset successfully.")
         return jsonify({"message": "Pipeline has been reset successfully. Ready for a new upload."}), 200
