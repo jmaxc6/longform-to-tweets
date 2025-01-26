@@ -16,6 +16,7 @@ import uuid  # For generating unique session IDs
 import io
 import requests
 from datetime import datetime, timezone
+import shutil
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -100,14 +101,41 @@ def update_pipeline_status(session_id, status=None, progress=None, details=None,
 
     supabase.table("pipeline_status").update(update_data).eq("session_id", session_id).execute()
 
-# def get_current_session_id():
-#     """
-#     Retrieves the most recent session_id from the database.
-#     """
-#     response = supabase.table("pipeline_status").select("session_id").order("created_at", desc=True).limit(1).execute()
-#     if response.data and response.data[0].get("session_id"):
-#         return response.data[0]["session_id"]
-#     return None
+def upload_input_to_supabase(file, filename):
+    """
+    Upload the input file to Supabase storage bucket 'Input Folder'.
+
+    Args:
+        file: File object to be uploaded.
+        filename: The name of the file to be stored in Supabase.
+
+    Returns:
+        Signed URL of the uploaded file.
+    """
+    try:
+        # Upload the file to Supabase storage bucket 'Input Folder'
+        response = supabase.storage.from_("Input Folder").upload(filename, file)
+
+        if not response or hasattr(response, "error"):
+            raise RuntimeError(f"File upload failed: {getattr(response, 'error', 'Unknown error')}")
+
+        # Generate a signed URL for the uploaded file
+        bucket_name = "Input Folder"
+        files_in_bucket = supabase.storage.from_(bucket_name).list("")
+        print(f"Files in Input Folder bucket: {files_in_bucket}", flush=True)
+        print(f"The Filename is {filename}", flush=True)
+        print(f"Bucket name: '{bucket_name}'", flush=True)  # This will show if there is whitespace
+        
+        signed_url_response = supabase.storage.from_(bucket_name).create_signed_url(filename, expires_in=3600)
+
+        if not signed_url_response or not signed_url_response.get("signed_url"):
+            raise RuntimeError("Signed URL generation failed or returned None.")
+
+        return signed_url_response["signed_url"]
+
+    except Exception as e:
+        print(f"Error uploading input file to Supabase: {str(e)}", flush=True)
+        raise RuntimeError(f"Failed to upload input file to Supabase: {str(e)}")
 
 def fetch_pipeline_status(session_id):
     response = supabase.table("pipeline_status").select("*").eq("session_id", session_id).eq("archived", False).execute()
@@ -164,73 +192,93 @@ def upload_folder():
         return jsonify({'error': 'No selected file for upload'}), 400
 
     if file and allowed_file(file.filename):
-        # Save the uploaded file
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
-
         # Generate a unique session ID
         session_id = str(uuid.uuid4())
+        filename = secure_filename(file.filename)
 
-        # Create a new pipeline session in the database
-        create_pipeline_session(session_id)
+        try:
+            # Read file content as bytes
+            file.stream.seek(0)  # Ensure the file pointer is at the beginning
+            file_content = file.stream.read()  # Read the file as bytes
 
-        # Start processing in a background thread
-        thread = Thread(target=process_file, args=(filepath, session_id))
-        thread.start()
+            # Debugging: Print the type and first 100 bytes of file_content
+            print(type(file_content), file_content[:100])  # Debugging line
 
-        # Return the session_id to the front-end
-        return jsonify({"message": "File uploaded successfully. Processing started.", "session_id": session_id}), 200
+            # Validate that the file content is in bytes format
+            if not isinstance(file_content, bytes):
+                raise ValueError("File content is not in bytes format.")
+
+            # Upload file to Supabase storage
+            response = supabase.storage.from_("Input Folder").upload(
+                f"{session_id}/{filename}", file_content
+            )
+
+            # Check if the upload failed
+            if hasattr(response, "error") and response.error:
+                raise RuntimeError(f"Upload failed: {response.error['message']}")
+            
+            bucket_name = "Input Folder"
+            
+            print(f"session_id: {session_id}, filename: {filename}", flush = True)
+            print(f"Full path: {session_id}/{filename}", flush = True)
+            files_in_bucket = supabase.storage.from_(bucket_name).list("")
+            print(f"Bucket name: '{bucket_name}'", flush=True)  # Check for unintended spaces
+            files_in_bucket = supabase.storage.from_("Input Folder").list(f"{session_id}")
+            print(f"Files in {bucket_name}/{session_id}: {files_in_bucket}", flush=True)
+
+            object_path = f"{session_id}/{filename}"
+
+            # signed_url_response = supabase.storage.from_("Input Folder").create_signed_url(
+            # "874929bf-d9ec-4679-b600-5b62ebd91a14/Archive-15.zip", expires_in=3600)
+
+            # Generate a signed URL for the uploaded file
+            signed_url_response = supabase.storage.from_(bucket_name).create_signed_url(
+                object_path, expires_in=3600)
+
+            print(f"The signed URL response is {signed_url_response}", flush=True)
+            
+            if not signed_url_response or not signed_url_response.get("signedURL"):
+                print(f"Signed URL response: {signed_url_response}")
+                raise RuntimeError("Signed URL generation failed or returned None.")
+
+            # Create a new pipeline session in the database
+            create_pipeline_session(session_id)
+
+            # Start processing in a background thread
+            thread = Thread(target=process_file_from_supabase, args=(session_id, signed_url_response["signedURL"]))
+            thread.start()
+
+            # Return the session ID and success message
+            return jsonify({
+                "message": "File uploaded successfully. Processing started.",
+                "session_id": session_id,
+                "file_url": signed_url_response["signedURL"]
+            }), 200
+        except Exception as e:
+            return jsonify({"error": f"Error uploading input file to Supabase: {str(e)}"}), 500
 
     return jsonify({'error': 'Invalid file format, only ZIP files are allowed'}), 400
 
-def process_file(filepath, session_id):
-    extract_path = os.path.join(app.config['UPLOAD_FOLDER'], "extracted")
-    os.makedirs(extract_path, exist_ok=True)
-
+def process_file_from_supabase(session_id, input_file_url):
     try:
-        with zipfile.ZipFile(filepath, 'r') as zip_ref:
-            zip_ref.extractall(extract_path)
-    except zipfile.BadZipFile:
-        update_pipeline_status(session_id, status="Error", error_message="Invalid ZIP file")
-        return
+        # Fetch the ZIP file from Supabase using the signed URL
+        response = requests.get(input_file_url)
+        if response.status_code != 200:
+            raise Exception(f"Failed to fetch file from Supabase: {response.text}")
 
-    try:
+        # Extract the ZIP file contents
+        with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
+            zip_ref.extractall("temporary_extracted_files")  # Extract to a temp folder
+
         # Process the extracted files
-        folder_path = extract_path
+        folder_path = "temporary_extracted_files"
         run_pipeline(folder_path, session_id)
     except Exception as e:
         update_pipeline_status(session_id, status="Error", error_message=str(e))
-
-def upload_to_supabase(file_path, session_id):
-    print("Starting upload to Supabase...")
-    print(f"File path: {file_path}, Session ID: {session_id}", flush=True)
-    
-    try:
-        # Upload the file to the Supabase storage bucket
-        with open(file_path, "rb") as file:
-            response = supabase.storage.from_("Zip uploads").upload(f"{session_id}.csv", file)
-
-        # Debugging: Check response type and content
-        print(f"Upload Response: {response}", flush=True)
-
-        if not response or hasattr(response, "error"):
-            raise RuntimeError(f"File upload failed: {getattr(response, 'error', 'Unknown error')}")
-
-        # Generate a signed URL
-        signed_url_response = supabase.storage.from_("Zip uploads").create_signed_url(f"{session_id}.csv", expires_in=3600)
-
-        # Debugging: Check signed URL response
-        print(f"Signed URL Response: {signed_url_response}", flush=True)
-
-        if not signed_url_response or not signed_url_response.get("signed_url"):
-            raise RuntimeError("Signed URL generation failed or returned None.")
-
-        # Return the signed URL
-        return signed_url_response["signed_url"]
-    except Exception as e:
-        print(f"Error during upload to Supabase: {str(e)}", flush=True)
-        raise RuntimeError(f"Failed to upload file to Supabase for session {session_id}: {str(e)}")
+    finally:
+        # Ensure cleanup happens even if an error occurs
+        if os.path.exists("temporary_extracted_files"):
+            shutil.rmtree("temporary_extracted_files")
 
 def run_pipeline(folder_path, session_id):
     output_csv = f"{session_id}.csv"  # Unique file name based on session_id
@@ -385,34 +433,21 @@ def download_csv():
 
 @app.route("/reset", methods=["POST"])
 def reset_pipeline():
-    session_id = request.json.get("session_id")
-    if not session_id:
-        return jsonify({"error": "Valid Session ID is required"}), 400
+    try:
+        # Mark all running sessions as archived
+        supabase.table("pipeline_status").update({"archived": True}).eq("status", "Running").execute()
 
-    reset_at = datetime.now(timezone.utc).isoformat()
+        # Clean up uploaded files from Supabase
+        storage_response = supabase.storage.from_("Input Folder").list("")
+        if storage_response and isinstance(storage_response, list):
+            for file in storage_response:
+                supabase.storage.from_("Input Folder").remove([file["name"]])
 
-    # Archive the old session
-    supabase.table("pipeline_status").update({
-        "status": "Archived",
-        "archived": True,
-        "reset_at": reset_at
-    }).eq("session_id", session_id).execute()
-
-    # (Optional) Create a new session
-    new_session_id = str(uuid.uuid4())
-    created_at = datetime.now(timezone.utc).isoformat()  # Convert datetime to ISO 8601 string
-    supabase.table("pipeline_status").insert({
-        "session_id": new_session_id,
-        "status": "Idle",
-        "progress": 0,
-        "details": [],
-        "error_message": None,
-        "output_file_url": None,
-        "created_at": created_at,
-        "archived": False
-    }).execute()
-
-    return jsonify({"message": "Pipeline has been reset.", "new_session_id": new_session_id}), 200
+        print("Pipeline reset successfully.")
+        return jsonify({"message": "Pipeline has been reset successfully. Ready for a new upload."}), 200
+    except Exception as e:
+        print(f"Error resetting pipeline: {str(e)}", flush=True)
+        return jsonify({"error": "An error occurred while resetting the pipeline. Please try again."}), 500
 
 if __name__ == "__main__":
     print("Starting Flask app...", flush=True)
